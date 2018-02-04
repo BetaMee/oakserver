@@ -7,7 +7,7 @@ import RestRoute from './restful'
  * @param {*} app (koa app引用)
  */
 const GetRouteMapping = app => {
-  // app.use(GraphqlRoute)
+  // app.use(GraphqlRoute.routes())
   app.use(RestRoute.routes())
 }
 

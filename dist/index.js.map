@@ -1,1 +1,1 @@
-{"version":3,"sources":["../server/index.js"],"names":[],"mappings":";;AACA;;AACA","file":"index.js","sourcesContent":["// Server entry\r\nimport 'babel-polyfill';\r\nimport './main/server';"]}
+{"version":3,"sources":["../server/index.js"],"names":[],"mappings":";;AACA;;AACA","file":"index.js","sourcesContent":["// Server entry\r\nimport 'babel-polyfill'\r\nimport './main/server'"]}

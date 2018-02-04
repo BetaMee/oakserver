@@ -3,14 +3,13 @@ import Mongoose, { Schema } from 'mongoose'
 // 定义文章Schema
 const ArticleSchema = new Schema(
   {
-    articleId: String, // 文章唯一ID
-    title: String, // 文章title
-    content: String, // markdown数据
-    author: String, // 作者
-    isPublished: Boolean, // 是否发表
-    archive: String, // 归档
-    // updateAt: String, // 更新日期
-    // createAt: String, // 发表时间
+    articleId: { type: String, required: true }, // 文章唯一ID
+    title: { type: String, required: true }, // 文章title
+    content: { type: String, required: true }, // markdown数据
+    summary: { type: String, required: true }, // 总结
+    author: { type: Schema.ObjectId, ref: 'Author', required: true }, // 作者
+    isPublished: { type: Boolean, required: true }, // 是否发表
+    archive: { type: Schema.ObjectId, ref: 'Archive', required: true }, // 归档
     // keywords: Array, // 关键字，一篇文章所包含的关键字
     // category: String, // 类别，一篇文章所属于的类别
     // comments: [] // 评论，后续会连接到github上，生成唯一ID

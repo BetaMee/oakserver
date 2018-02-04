@@ -1,9 +1,13 @@
 import Mongoose from 'mongoose'
 import config from '../config'
 
+// Mongoose使用全局Promise
+Mongoose.Promise = global.Promise
+
 // 导出Models
-export * from './models/article'
-export * from './models/author'
+export * from './article'
+export * from './author'
+export * from './archive'
 
 // 连接mongodb
 export const database = () => {
