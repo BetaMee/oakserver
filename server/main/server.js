@@ -2,7 +2,9 @@ import Koa from 'koa'
 import KoaStatic from 'koa-static'
 import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
-import { graphqlKoa } from 'apollo-server-koa'
+
+// 引入路由
+import GetRouteMapping from '../router/'
 
 const app = new Koa()
 const router = new Router()
@@ -13,8 +15,11 @@ app.use(KoaStatic(__dirname + '/public'))
 
 // 路由设置test
 router.get('/test', (ctx, next) => {
-  ctx.body="test page"
+  ctx.body= 'test page'
 })
+
+// 生成Router Mapping
+GetRouteMapping(app)
 
 app
   .use(router.routes())

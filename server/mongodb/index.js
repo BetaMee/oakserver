@@ -1,6 +1,9 @@
 import Mongoose from 'mongoose'
 import config from '../config'
 
+// 导出Models
+export * from './models/article'
+export * from './models/author'
 
 // 连接mongodb
 export const database = () => {
