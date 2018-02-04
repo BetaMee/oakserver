@@ -6,13 +6,7 @@ import {
   // createArticle
 } from '../controllers'
 
-
 const RestRouter = Router()
-
-const help = async (ctx, next) => {
-  console.log(getArticles)
-  ctx.body = 'hello world'
-}
 
 RestRouter
   .get('/getarticle', getArticles)

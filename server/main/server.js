@@ -3,7 +3,7 @@ import KoaStatic from 'koa-static'
 import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
 
-// 引入路由
+// 引入路由映射函数
 import GetRouteMapping from '../router/'
 
 const app = new Koa()

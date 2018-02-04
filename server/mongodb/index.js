@@ -11,6 +11,10 @@ export const database = () => {
 
   Mongoose.connect(config.dbPath)
 
+  Mongoose.once('open', () => {
+    console.log('we have connected mongodb')
+  })
+
   Mongoose.connection.on('disconnected', () => {
     Mongoose.connect(config.dbPath)
   })
