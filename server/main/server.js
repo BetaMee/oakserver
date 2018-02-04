@@ -2,7 +2,7 @@ import Koa from 'koa'
 import KoaStatic from 'koa-static'
 import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
-import { graphqlConnect } from 'apollo-server-express'
+import { graphqlKoa } from 'apollo-server-koa'
 
 const app = new Koa()
 const router = new Router()
