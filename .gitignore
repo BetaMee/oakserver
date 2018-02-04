@@ -1,2 +1,5 @@
 node_modules/
 dist/
+
+# log文件
+yarn-error.log
