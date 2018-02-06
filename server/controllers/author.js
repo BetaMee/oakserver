@@ -1,7 +1,7 @@
 import Mongoose from 'mongoose'
 
 /**
- * 获取作者信息
+ * 获取所有作者
  * @param {*} ctx 
  * @param {*} next 
  */
@@ -10,7 +10,16 @@ const fetchAuthors = async (ctx, next) => {
 }
 
 /**
- * 创造作者信息
+ * 获取某一个作者
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+const fetchAuthorById = async (ctx, next) => {
+
+}
+
+/**
+ * 添加一个作者
  * @param {*} ctx 
  * @param {*} next 
  */
@@ -19,28 +28,29 @@ const createAuthor = async (ctx, next) => {
 }
 
 /**
- * 更新作者信息
+ * 更新一个作者
  * @param {*} ctx 
  * @param {*} next 
  */
-const updateAuthor = async (ctx, next) => {
+const updateAuthorById = async (ctx, next) => {
 
 }
 
 
 /**
- * 删除作者信息
+ * 删除一个作者
  * @param {*} ctx 
  * @param {*} next 
  */
-const deleteAuthor = async (ctx, next) => {
+const deleteAuthorById = async (ctx, next) => {
 
 }
 
 
 export {
-  fetchAuthors,
-  createAuthor,
-  updateAuthor,
-  deleteAuthor
+  fetchAuthors, // 获取所有作者
+  fetchAuthorById, // 获取某一个作者
+  createAuthor, // 添加一个作者
+  updateAuthorById, // 更新一个作者
+  deleteAuthorById, // 删除一个作者
 }

@@ -13,9 +13,9 @@ A backend server for LoveOak
 
 通过文章ID获取：`/rest/article/:articleId`
 
-某归档类下有多少文章：`/rest/article/archive/:archive?limit={}&offset={}&sort={}`
+某归档类下有多少文章：`/rest/article/archive/:archiveId?limit={}&offset={}&sort={}`
 
-某作者下有多少文章：`/rest/article/author/:author/?limit={}&offset={}&sort={}`
+某作者下有多少文章：`/rest/article/author/:authorId/?limit={}&offset={}&sort={}`
 
 **POST /**
 

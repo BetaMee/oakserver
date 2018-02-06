@@ -3,7 +3,7 @@ import ArticleModel from '../models'
 
 
 /**
- * 获取文章
+ * 获取所有文章
  * @param {*} ctx 
  * @param {*} next 
  */
@@ -11,9 +11,36 @@ const fetchArticles = async (ctx, next) => {
   
 }
 
+/**
+ * 通过ID获取文章
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+const fetchArticleById = async (ctx, next) => {
+
+}
 
 /**
- * 创建文章
+ * 某归档类下有多少文章
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+const fetchArticlesByArchive = async (ctx, next) => {
+
+}
+
+
+/**
+ * 某作者下有多少文章
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+const fetchArticlesByAuthor = async (ctx, next) => {
+
+}
+
+/**
+ * 生成一篇新文章
  * @param {*} ctx 
  * @param {*} next 
  */
@@ -23,26 +50,29 @@ const createArticle = async (ctx, next)  => {
 
 
 /**
- * 更新文章
+ * 更新一篇文章
  * @param {*} ctx 
  * @param {*} next 
  */
-const updateArticle = async (ctx, next) => {
+const updateArticleById = async (ctx, next) => {
 
 }
 
 /**
- * 删除文章
+ * 删除一篇文章
  * @param {*} ctx 
  * @param {*} next 
  */
-const deleteArticle = async (ctx, next) => {
+const deleteArticleById = async (ctx, next) => {
 
 }
 
 export {
-  fetchArticles, // 获取文章
-  createArticle, // 生成文章
-  updateArticle, // 更新文章
-  deleteArticle, // 删除文章
+  fetchArticles, // 获取所有文章
+  fetchArticleById, // 通过ID获取文章
+  fetchArticlesByArchive, // 某归档类下有多少文章
+  fetchArticlesByAuthor, // 某作者下有多少文章
+  createArticle, // 生成一篇新文章
+  updateArticleById, // 更新一篇文章
+  deleteArticleById, // 删除一篇文章
 }
