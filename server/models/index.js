@@ -9,13 +9,15 @@ export * from './article'
 export * from './author'
 export * from './archive'
 
+Mongoose.Promise = global.Promise
+
 // 连接mongodb
-export const database = () => {
-  Mongoose.set('debug', true)
+export default () => {
+  // Mongoose.set('debug', true)
 
   Mongoose.connect(config.dbPath)
 
-  Mongoose.once('open', () => {
+  Mongoose.connection.once('open', () => {
     console.log('we have connected mongodb')
   })
 
@@ -26,7 +28,7 @@ export const database = () => {
     console.error(err)
   })
 
-  Mongoose.connection.on('open', async () => {
-    console.log('Connected to MongoDB ', config.dbPath)
-  })
+  // Mongoose.connection.on('open', async () => {
+  //   console.log('Connected to MongoDB ', config.dbPath)
+  // })
 }

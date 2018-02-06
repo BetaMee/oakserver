@@ -1,5 +1,5 @@
 import Mongoose from 'mongoose'
-import ArticleModel from '../models'
+import { ArticleModel } from '../models'
 
 
 /**
@@ -45,7 +45,13 @@ const fetchArticlesByAuthor = async (ctx, next) => {
  * @param {*} next 
  */
 const createArticle = async (ctx, next)  => {
-  ctx.body = 'fuck hello'
+  // 获取body中的数据
+  const { body } = ctx.request
+  // 写入数据库
+  // const article = new ArticleModel(body)
+  // const a = await article.save()
+  console.log(ArticleModel)
+  ctx.body = body
 }
 
 
