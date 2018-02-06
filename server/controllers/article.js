@@ -8,8 +8,7 @@ import ArticleModel from '../models'
  * @param {*} next 
  */
 const fetchArticles = async (ctx, next) => {
-  // 业务逻辑
-  ctx.body = 'hello fuck'
+  
 }
 
 

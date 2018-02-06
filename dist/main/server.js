@@ -16,6 +16,10 @@ var _koaBodyparser = require('koa-bodyparser');
 
 var _koaBodyparser2 = _interopRequireDefault(_koaBodyparser);
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 var _router = require('../router/');
 
 var _router2 = _interopRequireDefault(_router);
@@ -30,20 +34,15 @@ const router = new _koaRouter2.default();
 
 // 使用 bodyParser 和 KoaStatic 中间件
 app.use((0, _koaBodyparser2.default)());
-app.use((0, _koaStatic2.default)(__dirname + '/public'));
-
-// 路由设置test
-router.get('/test', (ctx, next) => {
-  ctx.body = 'test page';
-});
+app.use((0, _koaStatic2.default)(_path2.default.resolve(__dirname, '../public/')));
 
 // 生成Router Mapping
-(0, _router2.default)(app);
+(0, _router2.default)(router);
 
 app.use(router.routes()).use(router.allowedMethods());
 
 app.listen(4000, () => {
-  console.log('GraphQL Server listen port: ' + 4000);
+  console.log('Oak Server listen port: ' + 4000);
   console.log('http://localhost:4000');
 });
 //# sourceMappingURL=server.js.map
