@@ -1,5 +1,5 @@
 import Mongoose from 'mongoose'
-import ArticleModel from '../mongodb'
+import ArticleModel from '../models'
 
 
 /**
@@ -19,7 +19,7 @@ const fetchArticles = async (ctx, next) => {
  * @param {*} next 
  */
 const createArticle = async (ctx, next)  => {
-
+  ctx.body = 'fuck hello'
 }
 
 

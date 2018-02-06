@@ -1,4 +1,4 @@
-// import GraphqlRoute from './graphql'
+import GraphqlRoute from './graphql'
 import RestRoute from './restful'
 
 
@@ -6,9 +6,9 @@ import RestRoute from './restful'
  * 获取RouteMapping
  * @param {*} app (koa app引用)
  */
-const GetRouteMapping = app => {
-  // app.use(GraphqlRoute.routes())
-  app.use(RestRoute.routes())
+const GetRouteMapping = router => {
+  // router.use('/graphql', GraphqlRoute.routes())
+  router.use('/rest', RestRoute.routes(), RestRoute.allowedMethods())
 }
 
 export default GetRouteMapping

@@ -18,6 +18,6 @@ const RestRouter = Router()
 
 RestRouter
   .get('/fetchArticles', fetchArticles)
-  .post('/createArticle', createArticle)
+  .get('/createArticle', createArticle)
 
 export default RestRouter
