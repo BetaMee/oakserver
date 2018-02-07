@@ -5,9 +5,9 @@ import bodyParser from 'koa-bodyparser'
 import path from 'path'
 
 // 引入路由映射函数
-import GetRouteMapping from '../router/'
+import GetRouteMapping from './router/'
 // 启动数据库
-import database from '../models'
+import database from './init/mongodb'
 database()
 
 // koa应用

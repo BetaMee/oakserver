@@ -1,5 +1,5 @@
 const config = {
-  dbpath: 'mongodb://localhost/graphql'
+  dbpath: 'mongodb://localhost/microserver'
 }
 
 export default config

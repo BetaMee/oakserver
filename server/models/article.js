@@ -1,4 +1,6 @@
-import Mongoose, { Schema } from 'mongoose'
+import Mongoose from 'mongoose'
+
+const { Schema } = Mongoose
 
 // 定义文章Schema
 const ArticleSchema = new Schema(
@@ -24,4 +26,4 @@ const ArticleSchema = new Schema(
 
 const ArticleModel = Mongoose.model('Article', ArticleSchema)
 
-export default ArticleModel
+export { ArticleModel }

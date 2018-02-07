@@ -17,4 +17,4 @@ const ArchiveSchema = new Schema(
 
 const ArchiveModel = Mongoose.model('Archive', ArchiveSchema)
 
-export default ArchiveModel
+export { ArchiveModel }

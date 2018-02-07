@@ -48,7 +48,7 @@ const createArticle = async (ctx, next)  => {
   // 获取body中的数据
   const { body } = ctx.request
   // 写入数据库
-  // const article = new ArticleModel(body)
+  // const article = ArticleModel
   // const a = await article.save()
   console.log(ArticleModel)
   ctx.body = body

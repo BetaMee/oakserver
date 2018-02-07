@@ -21,4 +21,4 @@ const AuthorSchema = new Schema(
 
 const AuthorModel = Mongoose.model('Author', AuthorSchema)
 
-export default AuthorModel
+export { AuthorModel }
