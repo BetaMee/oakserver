@@ -1,5 +1,5 @@
 const config = {
-  dbpath: 'mongodb://localhost/microserver'
+  dbpath: 'mongodb://localhost/oakserver'
 }
 
 export default config
