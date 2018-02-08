@@ -35,7 +35,7 @@ A backend server for LoveOak
 
 **DELETE /**
 
-删除一篇文章：`/rest/article/delete/:articleId`
+- 删除一篇文章：`/rest/article/delete/:articleId`
 
 
 
