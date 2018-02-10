@@ -8,7 +8,7 @@ import { ArticleModel } from '../models'
  * @param {*} next 
  */
 const fetchArticles = async (ctx, next) => {
-  
+  ctx.body = '<h1>FUCK AWS</h1>'
 }
 
 /**
@@ -45,13 +45,13 @@ const fetchArticlesByAuthor = async (ctx, next) => {
  * @param {*} next 
  */
 const createArticle = async (ctx, next)  => {
-  // 获取body中的数据
-  const { body } = ctx.request
-  // 写入数据库
-  // const article = ArticleModel
+  // // 获取body中的数据
+  // const { body } = ctx.request
+  // // 写入数据库
+  // const article = new ArticleModel(body)
   // const a = await article.save()
-  console.log(ArticleModel)
-  ctx.body = body
+  // console.log(a)
+  ctx.body = 'fuck world'
 }
 
 
