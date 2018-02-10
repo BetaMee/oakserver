@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/BetaMee/oakserver.svg?branch=master)](https://travis-ci.org/BetaMee/oakserver)
+
 ## Oakserver
 
 A backend server for LoveOak
