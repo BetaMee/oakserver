@@ -1,0 +1,5 @@
+language: node_js   # 声明构建语言环境
+node_js:
+  - "8"
+script:
+  - npm run build
