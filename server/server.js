@@ -7,8 +7,8 @@ import path from 'path'
 // 引入路由映射函数
 import GetRouteMapping from './router/'
 // 启动数据库
-import database from './init/mongodb'
-database()
+// import database from './init/mongodb'
+// database()
 
 // koa应用
 const app = new Koa()
