@@ -11,8 +11,6 @@ var _mongoose2 = _interopRequireDefault(_mongoose);
 
 var _models = require('../models');
 
-var _models2 = _interopRequireDefault(_models);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -20,7 +18,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {*} ctx 
  * @param {*} next 
  */
-const fetchArticles = async (ctx, next) => {};
+const fetchArticles = async (ctx, next) => {
+  ctx.body = '<h1>FUCK AWS</h1>';
+};
 
 /**
  * 通过ID获取文章
@@ -49,7 +49,13 @@ const fetchArticlesByAuthor = async (ctx, next) => {};
  * @param {*} next 
  */
 const createArticle = async (ctx, next) => {
-  ctx.body = 'fuck hello';
+  // // 获取body中的数据
+  // const { body } = ctx.request
+  // // 写入数据库
+  // const article = new ArticleModel(body)
+  // const a = await article.save()
+  // console.log(a)
+  ctx.body = 'fuck world';
 };
 
 /**

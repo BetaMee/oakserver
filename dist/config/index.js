@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 const config = {
-  dbpath: 'mongodb://localhost/graphql'
+  dbpath: 'mongodb://localhost/oakserver'
 };
 
 exports.default = config;

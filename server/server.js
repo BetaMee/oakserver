@@ -4,6 +4,9 @@ import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
 import path from 'path'
 
+// 定义端口
+const port = process.env.PORT || 8080
+
 // 引入路由映射函数
 import GetRouteMapping from './router/'
 // 启动数据库
@@ -25,7 +28,7 @@ app
   .use(router.routes())
   .use(router.allowedMethods())
 
-app.listen(4000, () => {
+app.listen(port, () => {
   console.log('Oak Server listen port: ' + 4000)
   console.log('http://localhost:4000')
 })

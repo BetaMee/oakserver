@@ -1,1 +1,1 @@
-{"version":3,"sources":["../../server/config/index.js"],"names":["config","dbpath"],"mappings":";;;;;AAAA,MAAMA,SAAS;AACbC,UAAQ;AADK,CAAf;;kBAIeD,M","file":"index.js","sourcesContent":["const config = {\r\n  dbpath: 'mongodb://localhost/graphql'\r\n}\r\n\r\nexport default config\r\n"]}
+{"version":3,"sources":["../../server/config/index.js"],"names":["config","dbpath"],"mappings":";;;;;AAAA,MAAMA,SAAS;AACbC,UAAQ;AADK,CAAf;;kBAIeD,M","file":"index.js","sourcesContent":["const config = {\r\n  dbpath: 'mongodb://localhost/oakserver'\r\n}\r\n\r\nexport default config\r\n"]}

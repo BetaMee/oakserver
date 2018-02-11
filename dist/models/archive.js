@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.ArchiveModel = undefined;
 
 var _mongoose = require('mongoose');
 
@@ -24,5 +25,5 @@ const ArchiveSchema = new _mongoose.Schema({
 
 const ArchiveModel = _mongoose2.default.model('Archive', ArchiveSchema);
 
-exports.default = ArchiveModel;
+exports.ArchiveModel = ArchiveModel;
 //# sourceMappingURL=archive.js.map

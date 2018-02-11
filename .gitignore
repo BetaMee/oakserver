@@ -1,4 +1,8 @@
 node_modules/
 
 # log文件
-yarn-error.log
+yarn-error.log
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

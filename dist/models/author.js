@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.AuthorModel = undefined;
 
 var _mongoose = require('mongoose');
 
@@ -28,5 +29,5 @@ const AuthorSchema = new _mongoose.Schema({
 
 const AuthorModel = _mongoose2.default.model('Author', AuthorSchema);
 
-exports.default = AuthorModel;
+exports.AuthorModel = AuthorModel;
 //# sourceMappingURL=author.js.map
