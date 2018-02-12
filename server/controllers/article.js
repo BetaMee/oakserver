@@ -8,7 +8,7 @@ import { ArticleModel } from '../models'
  * @param {*} next 
  */
 const fetchArticles = async (ctx, next) => {
-  ctx.body = '<h1>FUCK AWS</h1>'
+  ctx.body = '<h1>THANK YOU AWS!</h1>'
 }
 
 /**

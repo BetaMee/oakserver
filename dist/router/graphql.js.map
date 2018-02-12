@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../server/router/graphql.js"],"names":["GraphQLRouter"],"mappings":";;;;;;AAAA;;;;;;AAEA,MAAMA,gBAAgB,yBAAtB;;kBAGeA,a","file":"graphql.js","sourcesContent":["import Router from 'koa-router'\r\n\r\nconst GraphQLRouter = new Router()\r\n\r\n\r\nexport default GraphQLRouter\r\n"]}
