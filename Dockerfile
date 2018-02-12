@@ -9,8 +9,8 @@ COPY package.json .
 # For npm@5 or later, copy package-lock.json as well
 # COPY package.json package-lock.json .
 
+# 安装依赖
 RUN yarn
-# RUN yarn run build
 
 # Bundle app source
 COPY . .
