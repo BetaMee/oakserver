@@ -36,6 +36,8 @@ deploy:
   bucket_name: "elasticbeanstalk-ap-northeast-1-459948791791"   # S3的名字，和elasticbeanstalk绑定，用于存储docker文件
   on:
     branch: master # 值部署主分支
+  skip_cleanup: true
+
 # 部署之后
 after_deploy:
   - echo "done deploying"
