@@ -1,36 +1,45 @@
-language: node_js   # 声明构建语言环境
+# 声明构建语言环境
+language: node_js
 
-notifications:      # 每次构建的时候是否通知，如果不想收到通知邮箱（个人感觉邮件贼烦），那就设置false吧
-  email: false
+# 每次构建的时候是否通知
+notifications:
+  email: false # 关闭邮件通知
+  slack: loveoak:$SLACK_LOVEOAK_CHNEEL # 开启slack通知
+    on_success: always
+    on_failure: always
 
+# nodejs语言版本
 node_js:
   - "8"
 
-cache:
-  directories:
-    - node_modules
+# 缓存
+cache: yarn
 
+# 使用docker必须的配置
 sudo: required
 
+# 使用docker
 services:
   - docker
 
+# 执行测试脚本，未开启
+# script:
+#   - yarn # 安装依赖
+#   - yarn run test # 进行测试
 
-script:
-  - npm install #安装依赖
-  - npm run build # 打包dist文件
-
+# 部署
 deploy:
-  provider: elasticbeanstalk
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: #IAM密钥
+  provider: elasticbeanstalk # 部署到AWS elasticbeanstalk
+  access_key_id: $AWS_ACCESS_KEY #IAM ACCESS_KEY，在Travis上设置
+  secret_access_key:             #IAM SECRET_KEY
     secure: "$AWS_SECRET_KEY"
-  region: "ap-northeast-1"  
-  app: "oakserver"
-  env: "oakserver-dev"
+  region: "ap-northeast-1" # elasticbeanstalk上的地区
+  app: "oakserver" # app名字
+  env: "oakserver-dev" # 部署的环境
+  # S3的名字，和elasticbeanstalk绑定，用于存储docker文件
   bucket_name: "elasticbeanstalk-ap-northeast-1-459948791791"
   on:
-    branch: master
-
+    branch: master # 值部署主分支
+# 部署之后
 after_deploy:
   - echo "done deploying"

@@ -1,4 +1,9 @@
+# git控制文件
 .git
+
+# 不需要打包进image的文件夹
 node_modules
+
+# log文件
 npm-debug.log
 yarn-error.log
