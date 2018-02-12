@@ -5,8 +5,6 @@ language: node_js
 notifications:
   email: false # 关闭邮件通知
   slack: loveoak:$SLACK_LOVEOAK_CHNEEL # 开启slack通知
-    on_success: always
-    on_failure: always
 
 # nodejs语言版本
 node_js:
@@ -36,8 +34,7 @@ deploy:
   region: "ap-northeast-1" # elasticbeanstalk上的地区
   app: "oakserver" # app名字
   env: "oakserver-dev" # 部署的环境
-  # S3的名字，和elasticbeanstalk绑定，用于存储docker文件
-  bucket_name: "elasticbeanstalk-ap-northeast-1-459948791791"
+  bucket_name: "elasticbeanstalk-ap-northeast-1-459948791791"   # S3的名字，和elasticbeanstalk绑定，用于存储docker文件
   on:
     branch: master # 值部署主分支
 # 部署之后
