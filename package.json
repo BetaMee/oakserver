@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register",
     "dev": "cross-env NODE_ENV=development nodemon ./server/index.js --inspect --exec babel-node",
-    "build": "babel ./server -d dist --source-maps",
+    "build": "babel ./server/ -d dist --source-maps",
     "start": "cross-env NODE_ENV=production node ./dist/index.js"
   },
   "keywords": [
