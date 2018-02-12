@@ -10,7 +10,7 @@ COPY package.json .
 # COPY package.json package-lock.json .
 
 RUN yarn
-RUN yarn run build
+# RUN yarn run build
 
 # Bundle app source
 COPY . .
