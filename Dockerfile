@@ -4,15 +4,16 @@ FROM node:8.9.4
 WORKDIR /usr/src/app
 
 # Install app dependencies
+COPY package.json yarn.lock .
 # For npm@5 or later, copy package-lock.json as well
-COPY package.json package-lock.json .
+# COPY package.json package-lock.json .
 
-RUN npm install
-RUN npm build
+RUN yarn
+RUN yarn run build
 
 # Bundle app source
 COPY . .
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]
