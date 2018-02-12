@@ -21,9 +21,6 @@ services:
   - docker
 
 # 执行测试脚本，未开启
-# script:
-#   - yarn # 安装依赖
-#   - yarn run test # 进行测试
 
 # 部署
 deploy:
