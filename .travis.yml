@@ -21,6 +21,8 @@ services:
   - docker
 
 # 执行测试脚本，未开启
+script:
+
 
 # 部署
 deploy:
