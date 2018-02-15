@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: oakserver-pro
+    environment: oakserver-dev
     group_suffix: null
 global:
   application_name: oakserver
