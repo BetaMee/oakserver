@@ -9,8 +9,6 @@ const port = process.env.PORT || 8080
 
 // 引入路由映射函数
 import GetRouteMapping from './router/'
-// 启动数据库
-
 
 // koa应用
 const app = new Koa()
@@ -28,6 +26,6 @@ app
   .use(router.allowedMethods())
 
 app.listen(port, () => {
-  console.log('Oak Server listen port: ' + 4000)
-  console.log('http://localhost:4000')
+  console.log('Oak Server listen port: ' + port)
+  console.log('http://localhost:' + port)
 })

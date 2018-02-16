@@ -1,12 +1,10 @@
-import Mongoose from 'mongoose'
-
 /**
  * 获取所有作者
  * @param {*} ctx 
  * @param {*} next 
  */
 const fetchAuthors = async (ctx, next) => {
-
+  ctx.body = '<h1>fetchAuthors</h1>'
 }
 
 /**

@@ -1,5 +1,3 @@
-import Mongoose from 'mongoose'
-
 /**
  * 获取所有归档类
  * @param {*} ctx 

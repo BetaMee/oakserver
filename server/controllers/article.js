@@ -1,6 +1,4 @@
-import Mongoose from 'mongoose'
 import { ArticleModel } from '../models'
-
 
 /**
  * 获取所有文章
@@ -8,7 +6,7 @@ import { ArticleModel } from '../models'
  * @param {*} next 
  */
 const fetchArticles = async (ctx, next) => {
-  ctx.body = '<h1>THANK YOU AWS! I LOVE YOU</h1>'
+
 }
 
 /**
@@ -17,7 +15,13 @@ const fetchArticles = async (ctx, next) => {
  * @param {*} next 
  */
 const fetchArticleById = async (ctx, next) => {
-
+  const articleId = ctx.params.articleId
+  try {
+    const result = await ArticleModel.getByArticleId(articleId)
+    ctx.body = result.Items
+  } catch(e) {
+    ctx.body = e
+  }
 }
 
 /**
@@ -45,13 +49,15 @@ const fetchArticlesByAuthor = async (ctx, next) => {
  * @param {*} next 
  */
 const createArticle = async (ctx, next)  => {
-  // // 获取body中的数据
-  // const { body } = ctx.request
-  // // 写入数据库
-  // const article = new ArticleModel(body)
-  // const a = await article.save()
-  // console.log(a)
-  ctx.body = 'fuck world'
+  // 获取body中的数据
+  const { body } = ctx.request
+  // 写入数据库
+  try {
+    await ArticleModel.create(body) //  result是空对象
+    ctx.body = body
+  } catch(e) {
+    ctx.body = e
+  }
 }
 
 
