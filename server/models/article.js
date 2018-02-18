@@ -15,15 +15,11 @@ const ArticleModel = {
   getByArticleId: (articleId) => {
     const params = {
       TableName: ARTICLE_TABLE,
-      KeyConditionExpression: '#articleId = :articleId',
-      ExpressionAttributeNames:{
-        '#articleId' : 'articleId'
-      },
-      ExpressionAttributeValues: {
-        ':articleId' : articleId
+      Key:{
+        'articleId': articleId
       }
     }
-    return docClient.query(params).promise()
+    return docClient.get(params).promise()
   },
   // 新建文章，只能返回空对象，辣鸡
   create: (article) => {
@@ -35,12 +31,45 @@ const ArticleModel = {
     return docClient.put(params).promise()
   },
   // 更新文章
-  updateByArticleId: () => {
-
+  updateByArticleId: (articleId, toUpdateArticle) => {
+    const {
+      title,
+      content,
+      archive,
+      updatedAt
+    } = toUpdateArticle
+    // 更新参数
+    const params = {
+      TableName: ARTICLE_TABLE,
+      Key:{
+        'articleId' : articleId
+      },
+      UpdateExpression: 'set #t = :t, #c = :c, #a = :a, #u = :u',
+      ExpressionAttributeNames: {
+        '#t': 'title',
+        '#c': 'content',
+        '#a': 'archive',
+        '#u': 'updatedAt'
+      },
+      ExpressionAttributeValues:{
+        ':t': title,
+        ':c': content,
+        ':a': archive,
+        ':u': updatedAt
+      },
+      ReturnValues: 'ALL_NEW'
+    }
+    return docClient.update(params).promise()
   },
   // 删除文章
-  deleteByArticleId: () => {
-
+  deleteByArticleId: (articleId) => {
+    const params = {
+      TableName: ARTICLE_TABLE,
+      Key:{
+        'articleId' : articleId
+      },
+    }
+    return docClient.delete(params).promise()
   }
 }
 
@@ -65,7 +94,7 @@ export { ArticleModel }
 //   { // 添加时间戳
 //     timestamps: {
 //       createdAt: 'createdAt',
-//       updateAt: 'updateAt'
+//       updatedAt: 'updateAt'
 //     }
 //   }
 // )

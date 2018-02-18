@@ -2,12 +2,12 @@
 aws dynamodb list-tables  --endpoint-url http://localhost:8000
 
 // 删除表
-aws dynamodb delete-table --table-name <value>
+aws dynamodb delete-table --table-name <value> --endpoint-url http://localhost:8000
 
 // 创建Article表
 aws dynamodb create-table --table-name Article
-  --attribute-definitions AttributeName=articleId,AttributeType=S AttributeName=title,AttributeType=S
-  --key-schema AttributeName=articleId,KeyType=HASH AttributeName=title,KeyType=RANGE
+  --attribute-definitions AttributeName=articleId,AttributeType=S
+  --key-schema AttributeName=articleId,KeyType=HASH
   --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
   --endpoint-url http://localhost:8000
 

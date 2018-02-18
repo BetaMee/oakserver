@@ -30,6 +30,7 @@ RestRouter
   // Article
   .get('/article', fetchArticles) // 获取所有文章
   .get('/article/:articleId', fetchArticleById) // 通过ID获取文章
+  // .get('/article/:articleId', fetchArticleById) // 通过文章标题获取文章，关键字
   .get('/article/archive/:archiveId', fetchArticlesByArchive) // 某归档类下有多少文章
   .get('/article/author/:authorId', fetchArticlesByAuthor) // 某作者下有多少文章
   .post('/article/create', createArticle) // 生成一篇新文章
