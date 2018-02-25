@@ -4,7 +4,7 @@
   "description": "koa server for blog platform",
   "main": "./server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"TEST\"",
     "dev": "cross-env NODE_ENV=development nodemon ./server/index.js --inspect --exec babel-node",
     "build": "babel ./server/ -d dist --source-maps",
     "start": "cross-env NODE_ENV=production node ./dist/index.js"
