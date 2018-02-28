@@ -87,7 +87,7 @@ const createAuthor = async (ctx, next) => {
  * @param {*} next 
  */
 const updateAuthorById = async (ctx, next) => {
-  // 获取文章ID
+  // 获取作者ID
   const authorId = ctx.params.authorId
   // 更新updateAt
   const updatedAt = getNowTimeStr(new Date())
@@ -134,7 +134,24 @@ const updateAuthorById = async (ctx, next) => {
  * @param {*} next 
  */
 const deleteAuthorById = async (ctx, next) => {
-
+  // 获取作者ID
+  const authorId = ctx.params.authorId
+  try {
+    await AuthorModel.deleteByAuthorId(authorId)
+    const result = {
+      action: 'DELETE',
+      message: 'author deleted successfully',
+      success: true
+    }
+    ctx.body = result
+  } catch(e) {
+    const error = {
+      message: e.message,
+      code: e.code,
+      success: false
+    }
+    ctx.body = error
+  }
 }
 
 
