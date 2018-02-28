@@ -28,7 +28,41 @@ const AuthorModel = {
     return docClient.put(params).promise()
   },
   // 更新一个作者
-  updateByAuthorId: () => {
+  updateByAuthorId: (authorId, toUpdateAuthor) => {
+    const {
+      name,
+      gender,
+      email,
+      social,
+      avatar,
+      updatedAt
+    } = toUpdateAuthor
+    // 更新参数
+    const params = {
+      TableName: AUTHOR_TABLE,
+      Key:{
+        'authorId' : authorId
+      },
+      UpdateExpression: 'set #n = :n, #g = :g, #e = :e, #s = :s, #a = :a, #u = :u',
+      ExpressionAttributeNames: {
+        '#n': name,
+        '#g': gender,
+        '#e': email,
+        '#s': social,
+        '#a': avatar,
+        '#u': updatedAt
+      },
+      ExpressionAttributeValues:{
+        ':n': name,
+        ':g': gender,
+        ':e': email,
+        ':s': social,
+        ':a': avatar,
+        ':u': updatedAt
+      },
+      ReturnValues: 'ALL_NEW'
+    }
+    return docClient.update(params).promise()
 
   },
   // 删除一个作者
