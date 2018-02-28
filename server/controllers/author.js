@@ -66,7 +66,7 @@ const createAuthor = async (ctx, next) => {
     await AuthorModel.create(newAuthor)
     const result = {
       action: 'CREATE',
-      message: 'article author successfully',
+      message: 'author create successfully',
       success: true,
       item: newAuthor
     }
