@@ -23,10 +23,8 @@ const fetchAuthorById = async (ctx, next) => {
     const author = await AuthorModel.getByAuthorId(authorId)
     // 返回的结果
     let Item = null
-    if(author.Item && author.Item.length > 0) {
+    if(author.Item) {
       Item = author.Item
-    } else {
-      Item = []
     }
     const result = {
       action: 'GET',

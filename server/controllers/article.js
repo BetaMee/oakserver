@@ -22,10 +22,8 @@ const fetchArticleById = async (ctx, next) => {
     const article = await ArticleModel.getByArticleId(articleId)
     // 返回的结果
     let Item = null
-    if(article.Item && article.Item.length > 0) {
+    if(article.Item) {
       Item = article.Item
-    } else {
-      Item = []
     }
     const result = {
       action: 'GET',

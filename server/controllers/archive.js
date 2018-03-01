@@ -20,12 +20,11 @@ const fetchArchiveById = async (ctx, next) => {
   const archiveId = ctx.params.archiveId
   try {
     const archive = await ArchiveModel.getByArchiveId(archiveId)
+    console.log(archive)
     // 返回的结果
     let Item = null
-    if(archive.Item && archive.Item.length > 0) {
+    if(archive.Item) {
       Item = archive.Item
-    } else {
-      Item = []
     }
     const result = {
       action: 'GET',
