@@ -20,11 +20,18 @@ const fetchArchiveById = async (ctx, next) => {
   const archiveId = ctx.params.archiveId
   try {
     const archive = await ArchiveModel.getByArchiveId(archiveId)
+    // 返回的结果
+    let Item = null
+    if(archive.Item && archive.Item.length > 0) {
+      Item = archive.Item
+    } else {
+      Item = []
+    }
     const result = {
       action: 'GET',
       message: 'get archive successfully',
       success: true,
-      item: archive.Item
+      item: Item
     }
     ctx.body = result
   } catch (e) {

@@ -21,11 +21,18 @@ const fetchAuthorById = async (ctx, next) => {
   const authorId = ctx.params.authorId
   try {
     const author = await AuthorModel.getByAuthorId(authorId)
+    // 返回的结果
+    let Item = null
+    if(author.Item && author.Item.length > 0) {
+      Item = author.Item
+    } else {
+      Item = []
+    }
     const result = {
       action: 'GET',
       message: 'get author successfully',
       success: true,
-      item: author.Item
+      item: Item
     }
     ctx.body = result
   } catch (e) {

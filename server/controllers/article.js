@@ -20,11 +20,18 @@ const fetchArticleById = async (ctx, next) => {
   const articleId = ctx.params.articleId
   try {
     const article = await ArticleModel.getByArticleId(articleId)
+    // 返回的结果
+    let Item = null
+    if(article.Item && article.Item.length > 0) {
+      Item = article.Item
+    } else {
+      Item = []
+    }
     const result = {
       action: 'GET',
       message: 'get article successfully',
       success: true,
-      item: article.Item
+      item: Item
     }
     ctx.body = result
   } catch(e) {
