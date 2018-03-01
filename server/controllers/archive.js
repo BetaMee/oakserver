@@ -20,7 +20,6 @@ const fetchArchiveById = async (ctx, next) => {
   const archiveId = ctx.params.archiveId
   try {
     const archive = await ArchiveModel.getByArchiveId(archiveId)
-    console.log(archive)
     // 返回的结果
     let Item = null
     if(archive.Item) {
@@ -103,6 +102,7 @@ const updateArchiveById = async (ctx, next) => {
   }
   try {
     const updatedArchive = await ArchiveModel.updateByArchiveId(archiveId, toUpdateArchive)
+    console.log(updatedArchive)
     const result = {
       action: 'UPDATE',
       message: 'archive updated successfully',

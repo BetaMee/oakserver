@@ -40,12 +40,15 @@ const ArchiveModel = {
       Key:{
         'archiveId' : archiveId
       },
+      ConditionExpression: '#id = :id',
       UpdateExpression: 'set #n = :n, #u = :u',
       ExpressionAttributeNames: {
+        '#id': 'archiveId',
         '#n': 'name',
         '#u': 'updatedAt'
       },
       ExpressionAttributeValues:{
+        ':id': archiveId,
         ':n': name,
         ':u': updatedAt
       },

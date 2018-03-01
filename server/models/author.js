@@ -43,8 +43,10 @@ const AuthorModel = {
       Key:{
         'authorId' : authorId
       },
+      ConditionExpression: '#id = :id',
       UpdateExpression: 'set #n = :n, #g = :g, #e = :e, #s = :s, #a = :a, #u = :u',
       ExpressionAttributeNames: {
+        '#id': 'authorId',
         '#n': 'name',
         '#g': 'gender',
         '#e': 'email',
@@ -53,6 +55,7 @@ const AuthorModel = {
         '#u': 'updatedAt'
       },
       ExpressionAttributeValues:{
+        ':id': authorId,
         ':n': name,
         ':g': gender,
         ':e': email,

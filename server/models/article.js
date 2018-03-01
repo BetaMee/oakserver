@@ -44,14 +44,17 @@ const ArticleModel = {
       Key:{
         'articleId' : articleId
       },
+      ConditionExpression: '#id = :id',
       UpdateExpression: 'set #t = :t, #c = :c, #a = :a, #u = :u',
       ExpressionAttributeNames: {
+        '#id': 'articleId',
         '#t': 'title',
         '#c': 'content',
         '#a': 'archive',
         '#u': 'updatedAt'
       },
       ExpressionAttributeValues:{
+        ':id': articleId,
         ':t': title,
         ':c': content,
         ':a': archive,
