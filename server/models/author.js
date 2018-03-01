@@ -45,12 +45,12 @@ const AuthorModel = {
       },
       UpdateExpression: 'set #n = :n, #g = :g, #e = :e, #s = :s, #a = :a, #u = :u',
       ExpressionAttributeNames: {
-        '#n': name,
-        '#g': gender,
-        '#e': email,
-        '#s': social,
-        '#a': avatar,
-        '#u': updatedAt
+        '#n': 'name',
+        '#g': 'gender',
+        '#e': 'email',
+        '#s': 'social',
+        '#a': 'avatar',
+        '#u': 'updatedAt'
       },
       ExpressionAttributeValues:{
         ':n': name,
