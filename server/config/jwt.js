@@ -1,0 +1,4 @@
+
+const JWT_SECRECT = 'OAKSEVER_SECRET'
+
+export default JWT_SECRECT
