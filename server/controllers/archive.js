@@ -102,7 +102,6 @@ const updateArchiveById = async (ctx, next) => {
   }
   try {
     const updatedArchive = await ArchiveModel.updateByArchiveId(archiveId, toUpdateArchive)
-    console.log(updatedArchive)
     const result = {
       action: 'UPDATE',
       message: 'archive updated successfully',
