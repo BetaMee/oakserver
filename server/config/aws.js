@@ -12,7 +12,9 @@ AWS.config.update({
 AWS.config.setPromisesDependency(global.Promise)
 
 // docClient操纵数据库
-const docClient = new AWS.DynamoDB.DocumentClient()
+const docClient = new AWS.DynamoDB.DocumentClient({
+  convertEmptyValues: true // intersting issuse: https://github.com/aws/aws-sdk-js/issues/833
+})
 
 export {
   docClient
