@@ -11,7 +11,9 @@ export default (customError) => {
       const status = customError.status || err.statusCode || err.status
       const result = {
         message: customError.message || err.message,
-        status: status
+        status: status,
+        orginmessage: err.message,
+        orgincode: err.statusCode || err.status
       }
       ctx.response.status = status
       ctx.response.body = result
