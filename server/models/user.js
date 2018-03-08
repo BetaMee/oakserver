@@ -8,19 +8,21 @@ const UserModel = {
 
   },
   // 获取某一个用户
-  getByUserId: (userId) => {
+  getByUserId: (userId, username) => {
     const params = {
       TableName: USER_TABLE,
       Key:{
-        'userId': userId
+        'userId': userId,
+        'username': username
       }
     }
     return docClient.get(params).promise()
   },
-  // 通过username插叙一个用户
+  // 通过username查询一个用户
   queryByUsername: (username) => {
     const params = {
       TableName : USER_TABLE,
+      IndexName : 'username',
       KeyConditionExpression: '#u = :u',
       ExpressionAttributeNames:{
         '#u': 'username'
@@ -40,13 +42,42 @@ const UserModel = {
     }
     return docClient.put(params).promise()
   },
-  // 通过userId一个用户（用户名、密码）
-  updateByUserId: ({ userId, username, password }) => {
+  // 更新用户状态
+  updateUserStatus: (userId, username, newUserStatus) => {    
     // 更新参数
     const params = {
       TableName: USER_TABLE,
       Key:{
-        'userId' :userId
+        'userId' : userId,
+        'username': username
+      },
+      ConditionExpression: '#id = :id and #ud = :ud',
+      UpdateExpression: 'set #status.#token = :t, #status.#isExpired = :e',
+      ExpressionAttributeNames: {
+        '#id': 'userId',
+        '#ud': 'username',
+        '#status': 'status',
+        '#token': 'token',
+        '#isExpired': 'isExpired'
+      },
+      ExpressionAttributeValues:{
+        ':id': userId,
+        ':ud': username,
+        ':t': newUserStatus.token,
+        ':e': newUserStatus.isExpired,
+      },
+      ReturnValues: 'ALL_NEW'
+    }
+    return docClient.update(params).promise()
+  },
+  // 通过userId更新一个用户（用户名、密码）
+  updateByUserId: (userId, username, password ) => {
+    // 更新参数
+    const params = {
+      TableName: USER_TABLE,
+      Key:{
+        'userId' :userId,
+        'username': username
       },
       ConditionExpression: '#id = :id',
       UpdateExpression: 'set #u = :u, #p = :p',
@@ -63,14 +94,14 @@ const UserModel = {
       ReturnValues: 'ALL_NEW'
     }
     return docClient.update(params).promise()
-
   },
   // 通过userId删除一个作者
-  deletebyUserId: (userId) => {
+  deletebyUserId: (userId, username) => {
     const params = {
       TableName: USER_TABLE,
       Key:{
-        'userId' : userId
+        'userId' : userId,
+        'username': username
       },
     }
     return docClient.delete(params).promise()
