@@ -1,6 +1,8 @@
-import uuidv4 from 'uuid/v4'
-import { AuthorModel } from '../models'
-import { getNowTimeStr } from '../utils'
+import {
+  AuthorModel
+} from '../models'
+
+import * as utils from '../utils'
 
 
 /**
@@ -58,11 +60,11 @@ const createAuthor = async (ctx, next) => {
     avatar,
   } = ctx.request.body
   // 生成作者唯一ID
-  const authorId = uuidv4()
+  const authorId = utils.generateUniqueID()
   // 生成时间戳
-  const nowTime = getNowTimeStr(new Date())
-  const createdAt = nowTime
-  const updatedAt = nowTime
+  const currentDate = utils.getCurrentDate(new Date())
+  const createdAt = currentDate
+  const updatedAt = currentDate
   // 写入数据库
   const newAuthor = {
     authorId, name, gender, email, social, avatar, createdAt, updatedAt
@@ -95,7 +97,7 @@ const updateAuthorById = async (ctx, next) => {
   // 获取作者ID
   const authorId = ctx.params.authorId
   // 更新updateAt
-  const updatedAt = getNowTimeStr(new Date())
+  const updatedAt = utils.getCurrentDate(new Date())
   // 获取可以更新的字段
   const {
     name,

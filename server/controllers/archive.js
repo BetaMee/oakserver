@@ -1,6 +1,8 @@
-import uuidv4 from 'uuid/v4'
-import { ArchiveModel } from '../models'
-import { getNowTimeStr } from '../utils'
+import {
+  ArchiveModel
+} from '../models'
+
+import * as utils from '../utils'
 
 /**
  * 获取所有归档类
@@ -53,11 +55,11 @@ const createArchive = async (ctx, next) => {
     name
   } = ctx.request.body
   // 生成archive唯一ID
-  const archiveId = uuidv4()
+  const archiveId = utils.generateUniqueID()
   // 生成时间戳
-  const nowTime = getNowTimeStr(new Date())
-  const createdAt = nowTime
-  const updatedAt = nowTime
+  const currentDate = utils.getCurrentDate(new Date())
+  const createdAt = currentDate
+  const updatedAt = currentDate
   // 写入数据库
   const newArchive = {
     archiveId, name, createdAt, updatedAt
@@ -90,7 +92,7 @@ const updateArchiveById = async (ctx, next) => {
   // 获取archiveId
   const archiveId = ctx.params.archiveId
   // 更新updateAt
-  const updatedAt = getNowTimeStr(new Date())
+  const updatedAt = utils.getCurrentDate(new Date())
   // 获取可以更新的字段
   const {
     name

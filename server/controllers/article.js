@@ -1,6 +1,8 @@
-import uuidv4 from 'uuid/v4'
-import { ArticleModel } from '../models'
-import { getNowTimeStr } from '../utils'
+import {
+  ArticleModel
+} from '../models'
+
+import * as utils from '../utils'
 
 /**
  * 获取所有文章
@@ -77,11 +79,11 @@ const createArticle = async (ctx, next)  => {
     archive
   } = ctx.request.body
   // 生成文章唯一id
-  const articleId = uuidv4()
+  const articleId = utils.generateUniqueID()
   // 生成创建时间
-  const nowTime = getNowTimeStr(new Date())
-  const createdAt = nowTime
-  const updatedAt = nowTime
+  const currentDate = utils.getCurrentDate(new Date())
+  const createdAt = currentDate
+  const updatedAt = currentDate
   // 确定是否需要发布，默认不需要
   const isPublished =false
   // 写入数据库
@@ -117,7 +119,7 @@ const updateArticleById = async (ctx, next) => {
   // 获取文章ID
   const articleId = ctx.params.articleId
   // 更新updateAt
-  const updatedAt = getNowTimeStr(new Date())
+  const updatedAt = utils.getCurrentDate(new Date())
   // 获取可以更新的字段
   const {
     title,
