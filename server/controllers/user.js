@@ -1,0 +1,194 @@
+import {
+  UserModel,
+  AuthorModel
+} from '../models'
+
+import * as utils from '../utils'
+/**
+ * 注册用户
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+const userRegister = async (ctx, next) => {
+  const {
+    username, // 用户名
+    password // 密码
+  } = ctx.request.body
+  // 判断是否已存在
+  try {
+    const result = await UserModel.queryByUsername(username)
+    const existUser = result.Items[0]
+
+    if (result.Count === 0) {
+      // 生成时间戳
+      const currentDate = utils.getCurrentDate(new Date())
+      // 生成新作者，数据是默认值
+      const newAuthor = {
+        authorId: utils.generateUniqueID(),
+        name: username,
+        gender: 'F',
+        email: '',
+        social: '',
+        avatar: '',
+        createdAt: currentDate,
+        updatedAt: currentDate
+      }
+      // 新用户，创建统一的profile
+      await AuthorModel.create(newAuthor)
+
+      // 注册进用户数据库
+      const HashPassword = utils.encryptPassword(password)
+
+      const newUser = {
+        userId: utils.generateUniqueID(),
+        username: username,
+        password: HashPassword,
+        profileId: newAuthor.authorId,
+        status: {
+          isExpired: true, // 默认为过期
+          token: '', // 等登陆后才有填充数据
+          createdDate: '', // 创建时间
+          expiredDate: '' // 过期时间
+        }
+      }
+      // 创建用户
+      await UserModel.create(newUser)
+      //响应
+      ctx.body = {
+        message: 'user registered successfuly',
+        userInfo: {
+          userId: newUser.userId,
+          username: newUser.username,
+          profileId: newUser.profileId
+        },
+        token: '',
+        success: true,
+        code: '10031',
+      }
+
+    } else if (existUser && existUser.username === username) {
+      // 已注册
+      ctx.body = {
+        message: 'user has been registered',
+        success: false,
+        code: '10032',
+      }
+    }
+  } catch(e) {
+    // 容错处理
+    const error = {
+      message: e.message,
+      success: false,
+      code: '10033',
+    }
+    ctx.body = error
+  }
+}
+
+/**
+ * 用户登录
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+const userLogin = async (ctx, next) => {
+  const {
+    username, // 用户名
+    password // 密码
+  } = ctx.request.body
+  // 响应
+  let response = null
+  // 验证是否是已注册用户
+  try {
+    const result = await UserModel.queryByUsername(username)
+    const existUser = result.Items[0]
+    if (existUser) {
+      // 验证密码是否正确
+      const HashPassword = utils.encryptPassword(password)
+
+      if (existUser.password === HashPassword) {
+        // 判断是否需要生成新状态
+        const newUserStatus = utils.generateStatus(existUser, { expiresIn: '1 days' })
+        // 设置登录状态
+        await UserModel.updateUserStatus(existUser.userId, existUser.username, newUserStatus)
+        // 密码正确，成功登录
+        response = {
+          message: 'login successfully!',
+          success: true,
+          code: '10010',
+          token: newUserStatus.token,
+          userId: existUser.userId,
+          profileId: existUser.profileId // 用户profile信息ID
+        }
+      } else {
+        // 密码不正确
+        response = {
+          message: 'password is not correct',
+          success: false,
+          code: '10011',
+        }
+      }
+    } else {
+      // 用户不存在
+      response = {
+        message: 'user is not exist!',
+        success: false,
+        code: '10012',
+      }
+    }
+    // 返回响应内容
+    ctx.body = response 
+  } catch(e) {
+    // 查询有误
+    const error = {
+      message: e.message,
+      code: '10013',
+      success: false
+    }
+    ctx.body = error
+  }
+}
+
+/**
+ * 用户登出
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+const userLogout = async (ctx, next) => {
+  const {
+    userId,
+    username
+  } = ctx.request.body
+
+  try {
+    const loginOutStatus = {
+      isExpired: true, // 过期了
+      token: '',
+      createdMoment: '',
+      expiredMoment: ''
+    }
+    // 更新user status状态
+    await UserModel.updateUserStatus(userId, username, loginOutStatus)
+
+    ctx.body = {
+      message: 'login out successfully!',
+      success: true,
+      code: '10021',
+    }
+
+  } catch(e) {
+    // 查询有误
+    const error = {
+      message: e.message,
+      code: '10023',
+      success: false
+    }
+    ctx.body = error
+  }
+}
+
+
+export {
+  userRegister,
+  userLogin,
+  userLogout
+}
