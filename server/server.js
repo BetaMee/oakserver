@@ -31,7 +31,7 @@ app.use(errorHandler({
 // 验证
 app.use(authHandler({
   unlessPath: [/^\/user\/login/, /^\/user\/register/],
-  unlessMethod: ['POST']
+  // unlessMethod: ['GET']
 }))
 
 // 生成Router Mapping
