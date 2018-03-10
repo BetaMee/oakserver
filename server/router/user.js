@@ -1,5 +1,4 @@
 import Router from 'koa-router'
-import jwt from 'jsonwebtoken'
 
 import {
   userRegister,
@@ -17,14 +16,5 @@ UserRoute
   // 注册
   .post('/register', userRegister)
 
-  .get('/test', async (ctx, body) => {
-    // console.log(ctx.state)
-    const token = ctx.header.authorization
-    ctx.body = token
-  })
-  .get('/test1', async (ctx, body) => {
-    console.log(ctx.state.user)
-    ctx.body = 'token'
-  })
 
 export default UserRoute
