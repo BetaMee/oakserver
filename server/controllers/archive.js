@@ -3,6 +3,7 @@ import {
 } from '../models'
 
 import * as utils from '../utils'
+import Code from '../config/code'
 
 /**
  * 获取所有归档类
@@ -29,7 +30,8 @@ const fetchArchiveById = async (ctx, next) => {
     }
     const result = {
       action: 'GET',
-      message: 'get archive successfully',
+      message: Code.ARCHIVE_GET_SUCCESS,
+      code: Code.ARCHIVE_GET_SUCCESS_CODE,
       success: true,
       item: Item
     }
@@ -37,7 +39,7 @@ const fetchArchiveById = async (ctx, next) => {
   } catch (e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARCHIVE_GET_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -68,7 +70,8 @@ const createArchive = async (ctx, next) => {
     await ArchiveModel.create(newArchive)
     const result = {
       action: 'CREATE',
-      message: 'archive create successfully',
+      message: Code.ARCHIVE_CREATE_SUCCESS,
+      code: Code.ARCHIVE_CREATE_SUCCESS_CODE,
       success: true,
       item: newArchive
     }
@@ -76,7 +79,7 @@ const createArchive = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARCHIVE_CREATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -106,7 +109,8 @@ const updateArchiveById = async (ctx, next) => {
     const updatedArchive = await ArchiveModel.updateByArchiveId(archiveId, toUpdateArchive)
     const result = {
       action: 'UPDATE',
-      message: 'archive updated successfully',
+      message: Code.ARCHIVE_UPDATE_SUCCESS,
+      code: Code.ARCHIVE_UPDATE_SUCCESS_CODE,
       success: true,
       item: updatedArchive.Attributes
     }
@@ -114,7 +118,7 @@ const updateArchiveById = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARCHIVE_UPDATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -134,14 +138,15 @@ const deleteArchiveById = async (ctx, next) => {
     await ArchiveModel.deleteByArchiveId(archiveId)
     const result = {
       action: 'DELETE',
-      message: 'archive deleted successfully',
+      message: Code.ARCHIVE_DELETE_SUCCESS,
+      code: Code.ARCHIVE_DELETE_SUCCESS_CODE,
       success: true
     }
     ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARCHIVE_DELETE_ERROR_CODE,
       success: false
     }
     ctx.body = error

@@ -3,6 +3,7 @@ import {
 } from '../models'
 
 import * as utils from '../utils'
+import Code from '../config/code'
 
 
 /**
@@ -30,7 +31,8 @@ const fetchAuthorById = async (ctx, next) => {
     }
     const result = {
       action: 'GET',
-      message: 'get author successfully',
+      message: Code.AUTHOR_GET_SUCCESS,
+      code: Code.AUTHOR_GET_SUCCESS_CODE,
       success: true,
       item: Item
     }
@@ -38,7 +40,7 @@ const fetchAuthorById = async (ctx, next) => {
   } catch (e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.AUTHOR_GET_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -73,7 +75,8 @@ const createAuthor = async (ctx, next) => {
     await AuthorModel.create(newAuthor)
     const result = {
       action: 'CREATE',
-      message: 'author create successfully',
+      message: Code.AUTHOR_CREATE_SUCCESS,
+      code: Code.AUTHOR_CREATE_SUCCESS_CODE,
       success: true,
       item: newAuthor
     }
@@ -81,7 +84,7 @@ const createAuthor = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.AUTHOR_CREATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -119,7 +122,8 @@ const updateAuthorById = async (ctx, next) => {
     const updatedAuthor = await AuthorModel.updateByAuthorId(authorId, toUpdateAuthor)
     const result = {
       action: 'UPDATE',
-      message: 'author updated successfully',
+      message: Code.AUTHOR_UPDATE_SUCCESS,
+      code: Code.AUTHOR_UPDATE_SUCCESS_CODE,
       success: true,
       item: updatedAuthor.Attributes
     }
@@ -127,7 +131,7 @@ const updateAuthorById = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.AUTHOR_UPDATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -147,14 +151,15 @@ const deleteAuthorById = async (ctx, next) => {
     await AuthorModel.deleteByAuthorId(authorId)
     const result = {
       action: 'DELETE',
-      message: 'author deleted successfully',
+      message: Code.AUTHOR_DELETE_SUCCESS,
+      code: Code.AUTHOR_DELETE_SUCCESS_CODE,
       success: true
     }
     ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.AUTHOR_DELETE_ERROR_CODE,
       success: false
     }
     ctx.body = error

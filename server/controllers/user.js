@@ -4,6 +4,8 @@ import {
 } from '../models'
 
 import * as utils from '../utils'
+import Code from '../config/code'
+
 /**
  * 注册用户
  * @param {*} ctx 
@@ -55,7 +57,7 @@ const userRegister = async (ctx, next) => {
       await UserModel.create(newUser)
       //响应
       ctx.body = {
-        message: 'user registered successfuly',
+        message: Code.USER_REGISTER_SUCCESS,
         userInfo: {
           userId: newUser.userId,
           username: newUser.username,
@@ -63,15 +65,15 @@ const userRegister = async (ctx, next) => {
         },
         token: '',
         success: true,
-        code: '10031',
+        code: Code.USER_REGISTER_SUCCESS_CODE,
       }
 
     } else if (existUser && existUser.username === username) {
       // 已注册
       ctx.body = {
-        message: 'user has been registered',
+        message: Code.USER_ALREADY_REGISTERED,
         success: false,
-        code: '10032',
+        code: Code.USER_ALREADY_REGISTERED_CODE,
       }
     }
   } catch(e) {
@@ -79,7 +81,7 @@ const userRegister = async (ctx, next) => {
     const error = {
       message: e.message,
       success: false,
-      code: '10033',
+      code: Code.USER_REGISTERED_ERROR_CODE,
     }
     ctx.body = error
   }
@@ -112,9 +114,9 @@ const userLogin = async (ctx, next) => {
         await UserModel.updateUserStatus(existUser.userId, existUser.username, newUserStatus)
         // 密码正确，成功登录
         response = {
-          message: 'login successfully!',
+          message: Code.USER_LOGIN_SUCCESS,
           success: true,
-          code: '10010',
+          code: Code.USER_LOGIN_SUCCESS_CODE,
           token: newUserStatus.token,
           userId: existUser.userId,
           profileId: existUser.profileId // 用户profile信息ID
@@ -122,17 +124,17 @@ const userLogin = async (ctx, next) => {
       } else {
         // 密码不正确
         response = {
-          message: 'password is not correct',
+          message: Code.USER_PASSWORD_INCORRECT,
           success: false,
-          code: '10011',
+          code: Code.USER_PASSWORD_INCORRECT_CODE,
         }
       }
     } else {
       // 用户不存在
       response = {
-        message: 'user is not exist!',
+        message: Code.USER_IS_NOT_EXISTS,
         success: false,
-        code: '10012',
+        code: Code.USER_IS_NOT_EXISTS_CODE,
       }
     }
     // 返回响应内容
@@ -141,7 +143,7 @@ const userLogin = async (ctx, next) => {
     // 查询有误
     const error = {
       message: e.message,
-      code: '10013',
+      code: Code.USER_LOGIN_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -170,16 +172,16 @@ const userLogout = async (ctx, next) => {
     await UserModel.updateUserStatus(userId, username, loginOutStatus)
 
     ctx.body = {
-      message: 'login out successfully!',
+      message: Code.USER_LOGOUT_SUCCESS,
       success: true,
-      code: '10021',
+      code: Code.USER_LOGOUT_SUCCESS_CODE,
     }
 
   } catch(e) {
     // 查询有误
     const error = {
       message: e.message,
-      code: '10023',
+      code: Code.USER_LOGOUT_ERROR_CODE,
       success: false
     }
     ctx.body = error

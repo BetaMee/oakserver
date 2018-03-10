@@ -3,6 +3,7 @@ import {
 } from '../models'
 
 import * as utils from '../utils'
+import Code from '../config/code'
 
 /**
  * 获取所有文章
@@ -29,7 +30,8 @@ const fetchArticleById = async (ctx, next) => {
     }
     const result = {
       action: 'GET',
-      message: 'get article successfully',
+      message: Code.ARTICLE_GET_SUCCESS,
+      code: Code.ARTICLE_GET_SUCCESS_CODE,
       success: true,
       item: Item
     }
@@ -37,7 +39,7 @@ const fetchArticleById = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARTICLE_GET_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -94,7 +96,8 @@ const createArticle = async (ctx, next)  => {
     await ArticleModel.create(newArticle) //  返回空对象
     const result = {
       action: 'CREATE',
-      message: 'article created successfully',
+      message: Code.ARTICLE_CREATE_SUCCESS,
+      code: Code.ARTICLE_CREATE_SUCCESS_CODE,
       success: true,
       item: newArticle
     }
@@ -102,7 +105,7 @@ const createArticle = async (ctx, next)  => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARTICLE_CREATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -137,7 +140,8 @@ const updateArticleById = async (ctx, next) => {
     const updatedArticle = await ArticleModel.updateByArticleId(articleId, toUpdateArticle)
     const result = {
       action: 'UPDATE',
-      message: 'article updated successfully',
+      message: Code.ARTICLE_UPDATE_SUCCESS,
+      code: Code.ARTICLE_UPDATE_SUCCESS_CODE,
       success: true,
       item: updatedArticle.Attributes
     }
@@ -145,7 +149,7 @@ const updateArticleById = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARTICLE_UPDATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -164,14 +168,15 @@ const deleteArticleById = async (ctx, next) => {
     await ArticleModel.deleteByArticleId(articleId)
     const result = {
       action: 'DELETE',
-      message: 'article deleted successfully',
+      message: Code.ARTICLE_DELETE_SUCCESS,
+      code: Code.ARTICLE_DELETE_SUCCESS_CODE,
       success: true
     }
     ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARTICLE_DELETE_ERROR_CODE,
       success: false
     }
     ctx.body = error
