@@ -93,7 +93,7 @@ const Code= {
 
   // Author
   // GET
-  AUTHOR_GET_SUCCESS: 'get article successfully',
+  AUTHOR_GET_SUCCESS: 'get author successfully',
   AUTHOR_GET_SUCCESS_CODE: '40011',
 
   AUTHOR_GET_ERROR_CODE: '40014',

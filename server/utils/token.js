@@ -12,7 +12,6 @@ const generateStatus = (user, expiresIn = {}) => {
   const expiresParam = expiresIn.expiresIn
   const expiresAmount = parseInt(/^\d+\.{0,1}\d*/.exec(expiresParam)[0])
   const expiresUnit = expiresParam.replace(/^\d+\.{0,1}\d*\s*/g, '')
-
   const { status } = user
   // isExpired为True，表明要么是刚生成用户，要么是已登出，则直接生成新Token
   if (status.isExpired) {
@@ -28,8 +27,8 @@ const generateStatus = (user, expiresIn = {}) => {
     // 当前moment对象
     const currentMoment = moment()
 
-    const currentMomentString = currentMoment.toString() // 创建时刻
-    const expiredMomentString = currentMoment.add(expiresAmount, expiresUnit).toString() // 过期时刻，1天后
+    const currentMomentString = currentMoment.format() // 创建时刻
+    const expiredMomentString = currentMoment.add(expiresAmount, expiresUnit).format() // 过期时刻，1天后
 
     return {
       isExpired: false,
@@ -57,8 +56,8 @@ const generateStatus = (user, expiresIn = {}) => {
         expiresIn
       )
 
-      const currentMomentString = currentMoment.toString() // 创建时刻
-      const expiredMomentString = currentMoment.add(expiresAmount, expiresUnit).toString() // 过期时刻，1天后
+      const currentMomentString = currentMoment.format() // 创建时刻
+      const expiredMomentString = currentMoment.add(expiresAmount, expiresUnit).format() // 过期时刻，1天后
 
       return {
         isExpired: false,

@@ -49,8 +49,8 @@ const userRegister = async (ctx, next) => {
         status: {
           isExpired: true, // 默认为过期
           token: '', // 等登陆后才有填充数据
-          createdDate: '', // 创建时间
-          expiredDate: '' // 过期时间
+          createdMoment: '', // 创建时间
+          expiredMoment: '' // 过期时间
         }
       }
       // 创建用户
