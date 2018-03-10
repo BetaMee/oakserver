@@ -1,6 +1,9 @@
-import uuidv4 from 'uuid/v4'
-import { ArticleModel } from '../models'
-import { getNowTimeStr } from '../utils'
+import {
+  ArticleModel
+} from '../models'
+
+import * as utils from '../utils'
+import Code from '../config/code'
 
 /**
  * 获取所有文章
@@ -20,17 +23,23 @@ const fetchArticleById = async (ctx, next) => {
   const articleId = ctx.params.articleId
   try {
     const article = await ArticleModel.getByArticleId(articleId)
+    // 返回的结果
+    let Item = null
+    if(article.Item) {
+      Item = article.Item
+    }
     const result = {
       action: 'GET',
-      message: 'get article successfully',
+      message: Code.ARTICLE_GET_SUCCESS,
+      code: Code.ARTICLE_GET_SUCCESS_CODE,
       success: true,
-      item: article.Item
+      item: Item
     }
     ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARTICLE_GET_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -72,11 +81,11 @@ const createArticle = async (ctx, next)  => {
     archive
   } = ctx.request.body
   // 生成文章唯一id
-  const articleId = uuidv4()
+  const articleId = utils.generateUniqueID()
   // 生成创建时间
-  const nowTime = getNowTimeStr(new Date())
-  const createdAt = nowTime
-  const updatedAt = nowTime
+  const currentDate = utils.getCurrentDate(new Date())
+  const createdAt = currentDate
+  const updatedAt = currentDate
   // 确定是否需要发布，默认不需要
   const isPublished =false
   // 写入数据库
@@ -87,7 +96,8 @@ const createArticle = async (ctx, next)  => {
     await ArticleModel.create(newArticle) //  返回空对象
     const result = {
       action: 'CREATE',
-      message: 'article created successfully',
+      message: Code.ARTICLE_CREATE_SUCCESS,
+      code: Code.ARTICLE_CREATE_SUCCESS_CODE,
       success: true,
       item: newArticle
     }
@@ -95,7 +105,7 @@ const createArticle = async (ctx, next)  => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARTICLE_CREATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -112,7 +122,7 @@ const updateArticleById = async (ctx, next) => {
   // 获取文章ID
   const articleId = ctx.params.articleId
   // 更新updateAt
-  const updatedAt = getNowTimeStr(new Date())
+  const updatedAt = utils.getCurrentDate(new Date())
   // 获取可以更新的字段
   const {
     title,
@@ -130,7 +140,8 @@ const updateArticleById = async (ctx, next) => {
     const updatedArticle = await ArticleModel.updateByArticleId(articleId, toUpdateArticle)
     const result = {
       action: 'UPDATE',
-      message: 'article updated successfully',
+      message: Code.ARTICLE_UPDATE_SUCCESS,
+      code: Code.ARTICLE_UPDATE_SUCCESS_CODE,
       success: true,
       item: updatedArticle.Attributes
     }
@@ -138,7 +149,7 @@ const updateArticleById = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARTICLE_UPDATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -157,14 +168,15 @@ const deleteArticleById = async (ctx, next) => {
     await ArticleModel.deleteByArticleId(articleId)
     const result = {
       action: 'DELETE',
-      message: 'article deleted successfully',
+      message: Code.ARTICLE_DELETE_SUCCESS,
+      code: Code.ARTICLE_DELETE_SUCCESS_CODE,
       success: true
     }
     ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARTICLE_DELETE_ERROR_CODE,
       success: false
     }
     ctx.body = error

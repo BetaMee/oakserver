@@ -1,6 +1,9 @@
-import uuidv4 from 'uuid/v4'
-import { AuthorModel } from '../models'
-import { getNowTimeStr } from '../utils'
+import {
+  AuthorModel
+} from '../models'
+
+import * as utils from '../utils'
+import Code from '../config/code'
 
 
 /**
@@ -21,17 +24,23 @@ const fetchAuthorById = async (ctx, next) => {
   const authorId = ctx.params.authorId
   try {
     const author = await AuthorModel.getByAuthorId(authorId)
+    // 返回的结果
+    let Item = null
+    if(author.Item) {
+      Item = author.Item
+    }
     const result = {
       action: 'GET',
-      message: 'get author successfully',
+      message: Code.AUTHOR_GET_SUCCESS,
+      code: Code.AUTHOR_GET_SUCCESS_CODE,
       success: true,
-      item: author.Item
+      item: Item
     }
     ctx.body = result
   } catch (e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.AUTHOR_GET_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -53,11 +62,11 @@ const createAuthor = async (ctx, next) => {
     avatar,
   } = ctx.request.body
   // 生成作者唯一ID
-  const authorId = uuidv4()
+  const authorId = utils.generateUniqueID()
   // 生成时间戳
-  const nowTime = getNowTimeStr(new Date())
-  const createdAt = nowTime
-  const updatedAt = nowTime
+  const currentDate = utils.getCurrentDate(new Date())
+  const createdAt = currentDate
+  const updatedAt = currentDate
   // 写入数据库
   const newAuthor = {
     authorId, name, gender, email, social, avatar, createdAt, updatedAt
@@ -66,7 +75,8 @@ const createAuthor = async (ctx, next) => {
     await AuthorModel.create(newAuthor)
     const result = {
       action: 'CREATE',
-      message: 'author create successfully',
+      message: Code.AUTHOR_CREATE_SUCCESS,
+      code: Code.AUTHOR_CREATE_SUCCESS_CODE,
       success: true,
       item: newAuthor
     }
@@ -74,7 +84,7 @@ const createAuthor = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.AUTHOR_CREATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -90,7 +100,7 @@ const updateAuthorById = async (ctx, next) => {
   // 获取作者ID
   const authorId = ctx.params.authorId
   // 更新updateAt
-  const updatedAt = getNowTimeStr(new Date())
+  const updatedAt = utils.getCurrentDate(new Date())
   // 获取可以更新的字段
   const {
     name,
@@ -112,7 +122,8 @@ const updateAuthorById = async (ctx, next) => {
     const updatedAuthor = await AuthorModel.updateByAuthorId(authorId, toUpdateAuthor)
     const result = {
       action: 'UPDATE',
-      message: 'author updated successfully',
+      message: Code.AUTHOR_UPDATE_SUCCESS,
+      code: Code.AUTHOR_UPDATE_SUCCESS_CODE,
       success: true,
       item: updatedAuthor.Attributes
     }
@@ -120,7 +131,7 @@ const updateAuthorById = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.AUTHOR_UPDATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -140,14 +151,15 @@ const deleteAuthorById = async (ctx, next) => {
     await AuthorModel.deleteByAuthorId(authorId)
     const result = {
       action: 'DELETE',
-      message: 'author deleted successfully',
+      message: Code.AUTHOR_DELETE_SUCCESS,
+      code: Code.AUTHOR_DELETE_SUCCESS_CODE,
       success: true
     }
     ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.AUTHOR_DELETE_ERROR_CODE,
       success: false
     }
     ctx.body = error

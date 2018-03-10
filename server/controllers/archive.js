@@ -1,6 +1,9 @@
-import uuidv4 from 'uuid/v4'
-import { ArchiveModel } from '../models'
-import { getNowTimeStr } from '../utils'
+import {
+  ArchiveModel
+} from '../models'
+
+import * as utils from '../utils'
+import Code from '../config/code'
 
 /**
  * 获取所有归档类
@@ -20,17 +23,23 @@ const fetchArchiveById = async (ctx, next) => {
   const archiveId = ctx.params.archiveId
   try {
     const archive = await ArchiveModel.getByArchiveId(archiveId)
+    // 返回的结果
+    let Item = null
+    if(archive.Item) {
+      Item = archive.Item
+    }
     const result = {
       action: 'GET',
-      message: 'get archive successfully',
+      message: Code.ARCHIVE_GET_SUCCESS,
+      code: Code.ARCHIVE_GET_SUCCESS_CODE,
       success: true,
-      item: archive.Item
+      item: Item
     }
     ctx.body = result
   } catch (e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARCHIVE_GET_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -48,11 +57,11 @@ const createArchive = async (ctx, next) => {
     name
   } = ctx.request.body
   // 生成archive唯一ID
-  const archiveId = uuidv4()
+  const archiveId = utils.generateUniqueID()
   // 生成时间戳
-  const nowTime = getNowTimeStr(new Date())
-  const createdAt = nowTime
-  const updatedAt = nowTime
+  const currentDate = utils.getCurrentDate(new Date())
+  const createdAt = currentDate
+  const updatedAt = currentDate
   // 写入数据库
   const newArchive = {
     archiveId, name, createdAt, updatedAt
@@ -61,7 +70,8 @@ const createArchive = async (ctx, next) => {
     await ArchiveModel.create(newArchive)
     const result = {
       action: 'CREATE',
-      message: 'archive create successfully',
+      message: Code.ARCHIVE_CREATE_SUCCESS,
+      code: Code.ARCHIVE_CREATE_SUCCESS_CODE,
       success: true,
       item: newArchive
     }
@@ -69,7 +79,7 @@ const createArchive = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARCHIVE_CREATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -85,7 +95,7 @@ const updateArchiveById = async (ctx, next) => {
   // 获取archiveId
   const archiveId = ctx.params.archiveId
   // 更新updateAt
-  const updatedAt = getNowTimeStr(new Date())
+  const updatedAt = utils.getCurrentDate(new Date())
   // 获取可以更新的字段
   const {
     name
@@ -99,7 +109,8 @@ const updateArchiveById = async (ctx, next) => {
     const updatedArchive = await ArchiveModel.updateByArchiveId(archiveId, toUpdateArchive)
     const result = {
       action: 'UPDATE',
-      message: 'archive updated successfully',
+      message: Code.ARCHIVE_UPDATE_SUCCESS,
+      code: Code.ARCHIVE_UPDATE_SUCCESS_CODE,
       success: true,
       item: updatedArchive.Attributes
     }
@@ -107,7 +118,7 @@ const updateArchiveById = async (ctx, next) => {
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARCHIVE_UPDATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -127,14 +138,15 @@ const deleteArchiveById = async (ctx, next) => {
     await ArchiveModel.deleteByArchiveId(archiveId)
     const result = {
       action: 'DELETE',
-      message: 'archive deleted successfully',
+      message: Code.ARCHIVE_DELETE_SUCCESS,
+      code: Code.ARCHIVE_DELETE_SUCCESS_CODE,
       success: true
     }
     ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
-      code: e.code,
+      code: Code.ARCHIVE_DELETE_ERROR_CODE,
       success: false
     }
     ctx.body = error
