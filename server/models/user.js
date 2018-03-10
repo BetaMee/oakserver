@@ -52,19 +52,23 @@ const UserModel = {
         'username': username
       },
       ConditionExpression: '#id = :id and #ud = :ud',
-      UpdateExpression: 'set #status.#token = :t, #status.#isExpired = :e',
+      UpdateExpression: 'set #status.#token = :t, #status.#isExpired = :e, #status.#createdMoment = :cm, #status.#expiredMoment = :em',
       ExpressionAttributeNames: {
         '#id': 'userId',
         '#ud': 'username',
         '#status': 'status',
         '#token': 'token',
-        '#isExpired': 'isExpired'
+        '#isExpired': 'isExpired',
+        '#createdMoment': 'createdMoment',
+        '#expiredMoment': 'expiredMoment'
       },
       ExpressionAttributeValues:{
         ':id': userId,
         ':ud': username,
         ':t': newUserStatus.token,
         ':e': newUserStatus.isExpired,
+        ':cm': newUserStatus.createdMoment,
+        ':em': newUserStatus.expiredMoment
       },
       ReturnValues: 'ALL_NEW'
     }
