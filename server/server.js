@@ -4,6 +4,10 @@ import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
 import path from 'path'
 
+// 引入中间件
+import errorHandler from './middleware/errorHandler'
+import authHandler from './middleware/authHandler'
+
 // 定义端口
 const port = process.env.PORT || 8080
 
@@ -18,12 +22,31 @@ const router = new Router()
 app.use(bodyParser())
 app.use(KoaStatic(path.resolve(__dirname, '../public/')))
 
+// 错误处理
+app.use(errorHandler({
+  message: 'some error happens :(', // 错误信息
+  status: 400, // 状态
+}))
+
+// 验证
+app.use(authHandler({
+  unlessPath: [/^\/user\/login/, /^\/user\/register/],
+  // unlessMethod: ['GET']
+}))
+
 // 生成Router Mapping
 GetRouteMapping(router)
 
 app
   .use(router.routes())
   .use(router.allowedMethods())
+
+
+// koa全局事件处理
+app.on('error', (err) => {
+  // 日志记录
+  console.log(err)
+})
 
 app.listen(port, () => {
   console.log('Oak Server listen port: ' + port)
