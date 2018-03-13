@@ -4,7 +4,11 @@ language: node_js
 # 每次构建的时候是否通知
 notifications:
   email: false # 关闭邮件通知
-  slack: loveoak:$SLACK_LOVEOAK_CHNEEL # 开启slack通知
+  slack: # 开启slack通知
+  on_success: always
+  on_failure: always
+  rooms:
+    secure: $SLACK_LOVEOAK_CHNEEL # 开启slack通知
 
 # nodejs语言版本
 node_js:
