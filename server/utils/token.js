@@ -43,7 +43,7 @@ const generateStatus = (user, expiresIn = {}) => {
     const willExpiredPoint = moment(expiredMoment).subtract(0.5, 'hours')
     // 请求验证的当前时刻，是否要过期
     const currentMoment = moment()
-    const isNearExipred = currentMoment.isBetween(willExpiredPoint, expiredMoment)
+    const isNearExipred = currentMoment.isAfter(willExpiredPoint)
 
     // 如果即将过期则签发新的密钥
     if (isNearExipred) {
