@@ -1,8 +1,11 @@
+import Archive from './archive'
+import Author from './author'
+
 /**
  * ArticleSchema
  */
 const Article = `
-  type article {
+  type Article {
     articleId: String!
     title: String
     content: String
@@ -14,4 +17,4 @@ const Article = `
   }
 `
 
-export default Article
+export default () => [Article, Archive, Author]

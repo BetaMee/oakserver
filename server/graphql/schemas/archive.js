@@ -1,8 +1,10 @@
+import Article from './article'
+
 /**
  * ArchiveSchema
  */
 const Archive = `
-  type archive {
+  type Archive {
     archiveId: String!
     name: String
     updatedAt: String
@@ -11,4 +13,4 @@ const Archive = `
   }
 `
 
-export default Archive
+export default () => [Archive, Article]
