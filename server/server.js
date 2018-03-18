@@ -31,7 +31,7 @@ app.use(errorHandler({
 // 验证
 app.use(authHandler({
   unlessPath: [/^\/user\/login/, /^\/user\/register/],
-  // unlessMethod: ['GET']
+  unlessMethod: ['GET', 'POST']
 }))
 
 // 生成Router Mapping
@@ -49,6 +49,6 @@ app.on('error', (err) => {
 })
 
 app.listen(port, () => {
-  console.log('Oak Server listen port: ' + port)
-  console.log('http://localhost:' + port)
+  console.log(`Server => http://localhost:${port}`)
+  console.log(`Graphiql => http://localhost:${port}/graphql/graphiql`)
 })
