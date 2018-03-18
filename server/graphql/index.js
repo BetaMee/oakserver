@@ -3,8 +3,8 @@ import { makeExecutableSchema } from 'graphql-tools'
 import rootTypeDefs from './schemas'
 // 引入resolver
 import rootResolvers from './resolvers'
-// 引入数据库操作对象
-import { docClient } from '../config/aws'
+// 引入Models
+import * as DBModel from '../models'
 
 const graphQLSchema =  makeExecutableSchema({
   typeDefs: rootTypeDefs,
@@ -14,7 +14,7 @@ const graphQLSchema =  makeExecutableSchema({
 const graphQLConfig = {
   schema: graphQLSchema,
   context: {
-    docClient,
+    DBModel,
   },
 }
 
