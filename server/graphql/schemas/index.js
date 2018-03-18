@@ -5,13 +5,11 @@ import Archive from './archive'
 // 查询
 const RootQuery = `
   type Query {
-    article(articleId: String): Article
-    archive: Archive
+    article(articleId: String!): Article
+    archive(archiveId: String!): Archive
+    author(authorId: String!): Author
   }
 `
-// getAllArticle: [Article]
-// author(authorId: String!): Author
-// archive(archiveId: String!): Archive
 
 // 变更
 const RootMutation = `
