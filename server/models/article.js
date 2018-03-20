@@ -21,6 +21,36 @@ const ArticleModel = {
     }
     return docClient.get(params).promise()
   },
+  // 通过ArchiveId查询文章
+  queryByArchiveId: (archiveId) => {
+    const params = {
+      TableName : ARTICLE_TABLE,
+      IndexName : 'archiveIndex',
+      KeyConditionExpression: '#a = :a',
+      ExpressionAttributeNames:{
+        '#a': 'archive'
+      },
+      ExpressionAttributeValues: {
+        ':a': archiveId
+      }
+    }
+    return docClient.query(params).promise()
+  },
+  // 通过AuthorId查询文章
+  queryByAuthorId: (authorId) => {
+    const params = {
+      TableName : ARTICLE_TABLE,
+      IndexName : 'authorIndex',
+      KeyConditionExpression: '#a = :a',
+      ExpressionAttributeNames:{
+        '#a': 'author'
+      },
+      ExpressionAttributeValues: {
+        ':a': authorId
+      }
+    }
+    return docClient.query(params).promise()
+  },
   // 新建文章，只能返回空对象，辣鸡
   create: (article) => {
     const params = {
