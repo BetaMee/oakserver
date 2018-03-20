@@ -9,7 +9,7 @@ const Archive = `
     name: String
     updatedAt: String
     createdAt: String
-    article: [Article]
+    articles: [Article]!
   }
 `
 
