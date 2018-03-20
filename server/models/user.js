@@ -22,7 +22,7 @@ const UserModel = {
   queryByUsername: (username) => {
     const params = {
       TableName : USER_TABLE,
-      IndexName : 'username',
+      IndexName : 'usernameIndex',
       KeyConditionExpression: '#u = :u',
       ExpressionAttributeNames:{
         '#u': 'username'
