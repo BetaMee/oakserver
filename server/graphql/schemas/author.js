@@ -13,7 +13,7 @@ const Author = `
     avatar: String
     email: String
     social: String
-    article: [Article]
+    articles: [Article]!
   }
 `
 
