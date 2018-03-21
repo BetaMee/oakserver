@@ -51,9 +51,33 @@ const fetchArticleById = async (ctx, next) => {
  * @param {*} ctx 
  * @param {*} next 
  */
-const fetchArticlesByArchive = async (ctx, next) => {
+const fetchArticlesByArchiveId = async (ctx, next) => {
   // 获取归档ID
-  const articleId = ctx.params.archiveId
+  const archiveId = ctx.params.archiveId
+  try {
+    const articles = await ArticleModel.queryByArchiveId(archiveId)
+    let Items
+    if (articles.Count === 0) {
+      Items = []
+    } else {
+      Items = articles.Items
+    }
+    const result = {
+      action: 'QUERY',
+      message: Code.ARTICLE_GETBYARCHIVE_SUCCESS,
+      code: Code.ARTICLE_GETBYARCHIVE_SUCCESS_CODE,
+      success: true,
+      items: Items
+    }
+    ctx.body = result
+  } catch(e) {
+    const error = {
+      message: e.message,
+      code: Code.ARTICLE_GETBYARCHIVE_ERROR_CODE,
+      success: false
+    }
+    ctx.body = error
+  }
 }
 
 
@@ -62,9 +86,33 @@ const fetchArticlesByArchive = async (ctx, next) => {
  * @param {*} ctx 
  * @param {*} next 
  */
-const fetchArticlesByAuthor = async (ctx, next) => {
+const fetchArticlesByAuthorId = async (ctx, next) => {
   // 获取作者ID
   const authorId = ctx.params.authorId
+  try {
+    const articles = await ArticleModel.queryByAuthorId(authorId)
+    let Items
+    if (articles.Count === 0) {
+      Items = []
+    } else {
+      Items = articles.Items
+    }
+    const result = {
+      action: 'QUERY',
+      message: Code.ARTICLE_GETBYAUTHOR_SUCCESS,
+      code: Code.ARTICLE_GETBYAUTHOR_SUCCESS_CODE,
+      success: true,
+      items: Items
+    }
+    ctx.body = result
+  } catch(e) {
+    const error = {
+      message: e.message,
+      code: Code.ARTICLE_GETBYAUTHOR_ERROR_CODE,
+      success: false
+    }
+    ctx.body = error
+  }
 }
 
 /**
@@ -186,8 +234,8 @@ const deleteArticleById = async (ctx, next) => {
 export {
   fetchArticles, // 获取所有文章
   fetchArticleById, // 通过ID获取文章
-  fetchArticlesByArchive, // 某归档类下有多少文章
-  fetchArticlesByAuthor, // 某作者下有多少文章
+  fetchArticlesByArchiveId, // 某归档类下有多少文章
+  fetchArticlesByAuthorId, // 某作者下有多少文章
   createArticle, // 生成一篇新文章
   updateArticleById, // 更新一篇文章
   deleteArticleById, // 删除一篇文章

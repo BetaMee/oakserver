@@ -5,8 +5,8 @@ import {
   // Article
   fetchArticles, // 获取所有文章
   fetchArticleById, // 通过ID获取文章
-  fetchArticlesByArchive, // 某归档类下有多少文章
-  fetchArticlesByAuthor, // 某作者下有多少文章
+  fetchArticlesByArchiveId, // 某归档类下有多少文章
+  fetchArticlesByAuthorId, // 某作者下有多少文章
   createArticle, // 生成一篇新文章
   updateArticleById, // 更新一篇文章
   deleteArticleById, // 删除一篇文章
@@ -31,8 +31,8 @@ RestRouter
   .get('/article', fetchArticles) // 获取所有文章
   .get('/article/:articleId', fetchArticleById) // 通过ID获取文章
   // .get('/article/:articleId', fetchArticleById) // 通过文章标题获取文章，关键字
-  .get('/article/archive/:archiveId', fetchArticlesByArchive) // 某归档类下有多少文章
-  .get('/article/author/:authorId', fetchArticlesByAuthor) // 某作者下有多少文章
+  .get('/article/archive/:archiveId', fetchArticlesByArchiveId) // 某归档类下有多少文章
+  .get('/article/author/:authorId', fetchArticlesByAuthorId) // 某作者下有多少文章
   .post('/article/create', createArticle) // 生成一篇新文章
   .put('/article/update/:articleId', updateArticleById) // 更新一篇文章
   .del('/article/delete/:articleId', deleteArticleById) // 删除一篇文章
