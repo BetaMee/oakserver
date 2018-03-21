@@ -23,15 +23,31 @@ const rootResolverMap = {
     archive: async (obj, args, context, info) => {
       const { ArchiveModel } = context.DBModel
       const { archiveId } = args
-      const archive = await ArchiveModel.getByArchiveId(archiveId)
-      return archive.Item
+      try {
+        const archive = await ArchiveModel.getByArchiveId(archiveId)
+        let Item = null
+        if (archive.Item) {
+          Item = archive.Item
+        }
+        return Item
+      } catch(e) {
+        return null
+      }
     },
 
     article: async (obj, args, context, info) => {
       const { ArticleModel } = context.DBModel
       const { articleId } = args
-      const article = await ArticleModel.getByArticleId(articleId)
-      return article.Item
+      try {
+        const article = await ArticleModel.getByArticleId(articleId)
+        let Item = null
+        if (article.Item) {
+          Item = article.Item
+        }
+        return Item
+      } catch(e) {
+        return null
+      }
     },
 
     articles: async (obj, args, context, info) => {

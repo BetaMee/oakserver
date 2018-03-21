@@ -5,10 +5,10 @@ const articleResolverMap = {
       const { ArchiveModel } = context.DBModel
       const archiveId = article.archive
       try {
-        const result = await ArchiveModel.getByArchiveId(archiveId)
+        const archive = await ArchiveModel.getByArchiveId(archiveId)
         let Item = null
-        if (result.Item) {
-          Item = result.Item
+        if (archive.Item) {
+          Item = archive.Item
         }
         return Item
       } catch(e) {
@@ -21,10 +21,10 @@ const articleResolverMap = {
       const { AuthorModel } = context.DBModel
       const authorId = article.author
       try {
-        const result = await AuthorModel.getByAuthorId(authorId)
+        const author = await AuthorModel.getByAuthorId(authorId)
         let Item = null
-        if (result.Item) {
-          Item = result.Item
+        if (author.Item) {
+          Item = author.Item
         }
         return Item
       } catch(e) {

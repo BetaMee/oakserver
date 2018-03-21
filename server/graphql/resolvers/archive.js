@@ -5,11 +5,11 @@ const archiveResolverMap = {
       const { archiveId } = archive
       // 通过archiveId来查询对应文章
       try {
-        const result = await ArticleModel.queryByArchiveId(archiveId)
-        if (result.Count === 0) {
+        const articles = await ArticleModel.queryByArchiveId(archiveId)
+        if (articles.Count === 0) {
           return []
         } else {
-          return result.Items
+          return articles.Items
         }
       } catch(e) {
         console.log(e)

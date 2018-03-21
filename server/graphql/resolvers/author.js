@@ -5,11 +5,11 @@ const authorResolverMap = {
       const { authorId } = author
       // 通过authorId来查询对应文章
       try {
-        const result = await ArticleModel.queryByAuthorId(authorId)
-        if (result.Count === 0) {
+        const articles = await ArticleModel.queryByAuthorId(authorId)
+        if (articles.Count === 0) {
           return []
         } else {
-          return result.Items
+          return articles.Items
         }
       } catch(e) {
         console.log(e)
