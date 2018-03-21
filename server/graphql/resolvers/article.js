@@ -4,15 +4,33 @@ const articleResolverMap = {
     archive: async (article, args, context) => {
       const { ArchiveModel } = context.DBModel
       const archiveId = article.archive
-      const archive = await ArchiveModel.getByArchiveId(archiveId)
-      return archive.Item
+      try {
+        const result = await ArchiveModel.getByArchiveId(archiveId)
+        let Item = null
+        if (result.Item) {
+          Item = result.Item
+        }
+        return Item
+      } catch(e) {
+        console.log(e)
+        return null
+      }
     },
     // 解析author字段
     author: async (article, args, context) => {
       const { AuthorModel } = context.DBModel
       const authorId = article.author
-      const author = await AuthorModel.getByAuthorId(authorId)
-      return author.Item
+      try {
+        const result = await AuthorModel.getByAuthorId(authorId)
+        let Item = null
+        if (result.Item) {
+          Item = result.Item
+        }
+        return Item
+      } catch(e) {
+        console.log(e)
+        return null
+      }
     }
   }
 }
