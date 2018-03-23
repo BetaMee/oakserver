@@ -5,6 +5,8 @@ import rootTypeDefs from './schemas'
 import rootResolvers from './resolvers'
 // 引入Models
 import * as DBModel from '../models'
+// 引入工具函数
+import * as utils from '../utils'
 
 const graphQLSchema =  makeExecutableSchema({
   typeDefs: rootTypeDefs,
@@ -15,6 +17,7 @@ const graphQLConfig = {
   schema: graphQLSchema,
   context: {
     DBModel,
+    utils
   },
 }
 
