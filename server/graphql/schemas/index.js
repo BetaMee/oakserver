@@ -1,7 +1,10 @@
-// 引入各个子schema
-import Article, { ArticleInput } from './article'
+// 引入各个子query schema
+import Article from './article'
 import Author from './author'
 import Archive from './archive'
+// 引入InputType
+import InputTypes from './InputTypes'
+
 // 查询
 const RootQuery = `
   type Query {
@@ -26,7 +29,9 @@ const RootMutation = `
     # 创建一个新的文章
     createArticle(article: ArticleInput!): Article
     # 创建一个新作者
+    createAuthor(author: AuthorInput!): Author
     # 创建一个新归档
+    createArchive(archive: ArchiveInput!): Archive
   }
 `
 // 最终的顶层查询描述接口
@@ -46,7 +51,7 @@ const rootTypeDefs = [
   Archive,
   // 变更
   RootMutation,
-  ArticleInput
+  InputTypes
 ]
 
 export default rootTypeDefs
