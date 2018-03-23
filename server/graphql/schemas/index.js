@@ -1,5 +1,5 @@
 // 引入各个子schema
-import Article from './article'
+import Article, { ArticleInput } from './article'
 import Author from './author'
 import Archive from './archive'
 // 查询
@@ -22,22 +22,31 @@ const RootQuery = `
 
 // 变更
 const RootMutation = `
-
-
+  type Mutation {
+    # 创建一个新的文章
+    createArticle(article: ArticleInput!): Article
+    # 创建一个新作者
+    # 创建一个新归档
+  }
 `
 // 最终的顶层查询描述接口
 const SchemaDefinition = `
   schema {
-    query: Query
+    query: Query,
+    mutation: Mutation
   }
 `
 
 const rootTypeDefs = [
   SchemaDefinition,
+  // 查询
   RootQuery,
   Article,
   Author,
-  Archive
+  Archive,
+  // 变更
+  RootMutation,
+  ArticleInput
 ]
 
 export default rootTypeDefs

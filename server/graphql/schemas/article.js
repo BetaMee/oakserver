@@ -16,5 +16,15 @@ const Article = `
     author: Author
   }
 `
+const ArticleInput = `
+  input ArticleInput {
+    title: String!
+    content: String!
+    author: String
+    archive: String
+  }
+`
 
 export default () => [Article, Archive, Author]
+
+export { ArticleInput }
