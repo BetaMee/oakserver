@@ -32,6 +32,18 @@ const RootMutation = `
     createAuthor(author: AuthorInput!): Author
     # 创建一个新归档
     createArchive(archive: ArchiveInput!): Archive
+    # 更新一个文章
+    updateArticle(articleId: String!, toUpdateArticle: ArticleInput!): Article
+    # 更新一个作者
+    updateAuthor(authorId: String!, toUpdateAuthor: AuthorInput!): Author
+    # 更新一个归档
+    updateArchive(archiveId: String!, toUpdateArchive: ArchiveInput!): Archive
+    # 删除一个文章
+    deleteArticle(articleId: String!): Article
+    # 删除一个作者
+    deleteAuthor(authorId: String!): Author
+    # 删除一个归档
+    deleteArchive(archiveId: String!): Archive
   }
 `
 // 最终的顶层查询描述接口
