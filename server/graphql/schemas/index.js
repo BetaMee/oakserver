@@ -33,11 +33,11 @@ const RootMutation = `
     # 创建一个新归档
     createArchive(archive: ArchiveInput!): Archive
     # 更新一个文章
-    updateArticle(articleId: String!, toUpdateArticle: ArticleInput!): Article
+    updateArticle(articleId: String!, toUpdateParam: ArticleInput!): Article
     # 更新一个作者
-    updateAuthor(authorId: String!, toUpdateAuthor: AuthorInput!): Author
+    updateAuthor(authorId: String!, toUpdateParam: AuthorInput!): Author
     # 更新一个归档
-    updateArchive(archiveId: String!, toUpdateArchive: ArchiveInput!): Archive
+    updateArchive(archiveId: String!, toUpdateParam: ArchiveInput!): Archive
     # 删除一个文章
     deleteArticle(articleId: String!): Article
     # 删除一个作者

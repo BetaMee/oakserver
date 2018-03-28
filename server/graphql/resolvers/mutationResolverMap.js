@@ -1,6 +1,7 @@
 const mutationResolverMap = {
   // Mutation
   Mutation: {
+    // 创建操作
     createArticle: async (obj, args, context, info) => {
       const { utils } = context
       const { ArticleModel } = context.DBModel
@@ -79,6 +80,96 @@ const mutationResolverMap = {
       } catch(e) {
         return null
       }
+    },
+    // 更新操作
+    updateArticle: async (obj, args, context, info) => {
+      const { utils } = context
+      const { ArticleModel } = context.DBModel
+      const { articleId } = args
+      // 获取可以更新的字段
+      const { 
+        title,
+        content,
+        author,
+        archive
+      } = args.toUpdateParam
+      // 更新updateAt
+      const updatedAt = utils.getCurrentDate(new Date())
+      // 更新的对象
+      const toUpdateArticle = {
+        title,
+        content,
+        archive,
+        updatedAt
+      }
+      try {
+        const updatedArticle = await ArticleModel.updateByArticleId(articleId, toUpdateArticle)
+        return updatedArticle.Attributes
+      } catch(e) {
+        return null
+      }
+    },
+    updateAuthor: async (obj, args, context, info) => {
+      const { utils } = context
+      const { AuthorModel } = context.DBModel
+      const { authorId } = args
+      // 获取可以更新的字段
+      const { 
+        name,
+        gender,
+        email,
+        social,
+        avatar
+      } = args.toUpdateParam
+      // 更新updateAt
+      const updatedAt = utils.getCurrentDate(new Date())
+      // 更新的对象
+      const toUpdateAuthor = {
+        name,
+        gender,
+        email,
+        social,
+        avatar,
+        updatedAt
+      }
+      try {
+        const updatedAuthor = await AuthorModel.updateByAuthorId(authorId, toUpdateAuthor)
+        return updatedAuthor.Attributes
+      } catch(e) {
+        return null
+      }
+    },
+    updateArchive: async (obj, args, context, info) => {
+      const { utils } = context
+      const { ArchiveModel } = context.DBModel
+      const { archiveId } = args
+      // 获取可以更新的字段
+      const { 
+        name,
+      } = args.toUpdateParam
+      // 更新updateAt
+      const updatedAt = utils.getCurrentDate(new Date())
+      // 更新的对象
+      const toUpdateArchive = {
+        name,
+        updatedAt
+      }
+      try {
+        const updatedArchive = await ArchiveModel.updateByArchiveId(archiveId, toUpdateArchive)
+        return updatedArchive.Attributes
+      } catch(e) {
+        return null
+      }
+    },
+    // 删除操作
+    deleteArticle: async (obj, args, context, info) => {
+
+    },
+    deleteAuthor: async (obj, args, context, info) => {
+
+    },
+    deleteArchive: async (obj, args, context, info) => {
+
     }
   }
 }
