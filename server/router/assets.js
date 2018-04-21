@@ -10,8 +10,7 @@ import {
   uploadVdieoAssets,
   uploadAduioAssets,
   uploadAvatarAssets,
-  deleteFile,
-  updateFile
+  deleteAssetsByKey
 } from '../controllers'
 
 const AssetsRuter = Router()
@@ -28,8 +27,6 @@ AssetsRuter
   // 上传头像
   .post('/upload/avatar', upload.single('avatar'), uploadAvatarAssets)
   // 删除文件
-  .del('/delete/assets', deleteFile)
-  // 更新文件信息
-  .put('/update/assets', updateFile)
+  .del('/delete/:assetskey', deleteAssetsByKey)
 
 export default AssetsRuter
