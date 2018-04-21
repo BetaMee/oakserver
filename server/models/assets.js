@@ -1,11 +1,10 @@
-import { s3Client } from '../config/aws'
+import { docClient, s3Client } from '../config/aws'
 
 const IMAGE_FOLDER = 'images'
 const FILE_FOLDER = 'files'
 const VIDEO_FOLDER = 'videos'
 const AUDIO_FOLDER = 'audios'
 const AVATAR_FOLDER = 'avatars'
-
 
 const AssetsModel = {
   // 上传图片
@@ -123,6 +122,22 @@ const AssetsModel = {
       }
     }
   },
+  // 更新DynamDB数据库，指明归属
+  addUserAssets: () => {
+
+  },
+  // 获取表中的对应资源
+  fetchUserAssets: () => {
+
+  },
+  // 删除表中的对应资源
+  deleteUserAssets: () => {
+
+  },
+  // 更新表中的对应资源
+  updateUserAssets: () => {
+
+  }
 }
 
 export { AssetsModel }

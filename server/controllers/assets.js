@@ -10,9 +10,8 @@ const uploadImageAssets = async (ctx, next) => {
     mimetype,
     buffer
   }  = ctx.req.file
-  // 限制文件类型
-  
   try {
+    // 限制文件类型
     if (!accepts['image'].includes(mimetype)) {
       throw(new Error('File type is not accepted'))
     }
@@ -24,7 +23,7 @@ const uploadImageAssets = async (ctx, next) => {
       fileType: mimetype // 文件类型
     }
     // 写入数据库
-    
+
     // 响应结果
     const result = {
       action: 'UPLOAD',
