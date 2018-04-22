@@ -3,6 +3,7 @@ import KoaStatic from 'koa-static'
 import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
 import path from 'path'
+import cors from 'koa2-cors'
 
 // 引入中间件
 import errorHandler from './middleware/errorHandler'
@@ -18,6 +19,8 @@ import GetRouteMapping from './router/'
 const app = new Koa()
 const router = new Router()
 
+// 解决跨域问题
+app.use(cors())
 // 使用 bodyParser 和 KoaStatic 中间件
 app.use(bodyParser())
 app.use(KoaStatic(path.resolve(__dirname, '../public/')))
