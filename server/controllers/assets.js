@@ -4,6 +4,13 @@ import {
 import Code from '../config/code'
 import accepts from '../config/accepts'
 
+const fetchAssets = async (ctx, next) => {
+  const {
+    userId,
+    archiveType
+  } = ctx.params
+}
+
 const uploadImageAssets = async (ctx, next) => {
   const {
     originalname,
@@ -12,7 +19,7 @@ const uploadImageAssets = async (ctx, next) => {
   }  = ctx.req.file
   try {
     // 限制文件类型
-    if (!accepts['image'].includes(mimetype)) {
+    if (!accepts[accepts.__IMAGE__].includes(mimetype)) {
       throw(new Error('File type is not accepted'))
     }
     const uploadedFile = await AssetsModel.uploadImage(buffer, originalname)
@@ -20,7 +27,8 @@ const uploadImageAssets = async (ctx, next) => {
       url: uploadedFile.Location, // 文件地址
       fileKey: uploadedFile.Key, // 文件在Bucket中的key
       fileName: originalname, // 文件原名
-      fileType: mimetype // 文件类型
+      fileType: mimetype, // 文件类型
+      archiveType: accepts.__IMAGE__ // 归档类型
     }
     // 写入数据库
 
@@ -82,6 +90,7 @@ const deleteAssetsByKey = async (ctx, next) => {
 }
 
 export {
+  fetchAssets,
   uploadImageAssets,
   uploadFileAssets,
   uploadVdieoAssets,

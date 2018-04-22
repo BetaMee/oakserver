@@ -5,6 +5,7 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage })
 
 import {
+  fetchAssets,
   uploadImageAssets,
   uploadFileAssets,
   uploadVdieoAssets,
@@ -16,6 +17,8 @@ import {
 const AssetsRuter = Router()
 
 AssetsRuter
+  // 获取资源
+  .get('/:userId/:archiveType', fetchAssets)
   // 上传图片
   .post('/upload/image', upload.single('image'), uploadImageAssets)
   // 上传文件
