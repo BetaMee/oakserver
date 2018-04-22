@@ -7,8 +7,11 @@ const queryResolverMap = {
       try {
         const author = await AuthorModel.getByAuthorId(authorId)
         let Item = null
-        if (author.Item) {
-          Item = author.Item
+        if(author.Item) {
+          Item = {
+            name: author.Item.username,
+            ...author.Item.profile,
+          }
         }
         return Item
       } catch(e) {

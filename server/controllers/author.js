@@ -5,7 +5,6 @@ import {
 import * as utils from '../utils'
 import Code from '../config/code'
 
-
 /**
  * 获取所有作者
  * @param {*} ctx 
@@ -27,7 +26,10 @@ const fetchAuthorById = async (ctx, next) => {
     // 返回的结果
     let Item = null
     if(author.Item) {
-      Item = author.Item
+      Item = {
+        name: author.Item.username,
+        ...author.Item.profile,
+      }
     }
     const result = {
       action: 'GET',
@@ -41,50 +43,6 @@ const fetchAuthorById = async (ctx, next) => {
     const error = {
       message: e.message,
       code: Code.AUTHOR_GET_ERROR_CODE,
-      success: false
-    }
-    ctx.body = error
-  }
-}
-
-/**
- * 添加一个作者
- * @param {*} ctx 
- * @param {*} next 
- */
-const createAuthor = async (ctx, next) => {
-  // 获取body中的数据
-  const {
-    name,
-    gender,
-    email,
-    social,
-    avatar,
-  } = ctx.request.body
-  // 生成作者唯一ID
-  const authorId = utils.generateUniqueID()
-  // 生成时间戳
-  const currentDate = utils.getCurrentDate(new Date())
-  const createdAt = currentDate
-  const updatedAt = currentDate
-  // 写入数据库
-  const newAuthor = {
-    authorId, name, gender, email, social, avatar, createdAt, updatedAt
-  }
-  try {
-    await AuthorModel.create(newAuthor)
-    const result = {
-      action: 'CREATE',
-      message: Code.AUTHOR_CREATE_SUCCESS,
-      code: Code.AUTHOR_CREATE_SUCCESS_CODE,
-      success: true,
-      item: newAuthor
-    }
-    ctx.body = result
-  } catch(e) {
-    const error = {
-      message: e.message,
-      code: Code.AUTHOR_CREATE_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -120,12 +78,20 @@ const updateAuthorById = async (ctx, next) => {
   }
   try {
     const updatedAuthor = await AuthorModel.updateByAuthorId(authorId, toUpdateAuthor)
+    // 返回的结果
+    let Item = null
+    if(updatedAuthor.Attributes) {
+      Item = {
+        name: updatedAuthor.Attributes.username,
+        ...updatedAuthor.Attributes.profile,
+      }
+    }
     const result = {
       action: 'UPDATE',
       message: Code.AUTHOR_UPDATE_SUCCESS,
       code: Code.AUTHOR_UPDATE_SUCCESS_CODE,
       success: true,
-      item: updatedAuthor.Attributes
+      item: Item
     }
     ctx.body = result
   } catch(e) {
@@ -138,39 +104,8 @@ const updateAuthorById = async (ctx, next) => {
   }
 }
 
-
-/**
- * 删除一个作者
- * @param {*} ctx 
- * @param {*} next 
- */
-const deleteAuthorById = async (ctx, next) => {
-  // 获取作者ID
-  const authorId = ctx.params.authorId
-  try {
-    await AuthorModel.deleteByAuthorId(authorId)
-    const result = {
-      action: 'DELETE',
-      message: Code.AUTHOR_DELETE_SUCCESS,
-      code: Code.AUTHOR_DELETE_SUCCESS_CODE,
-      success: true
-    }
-    ctx.body = result
-  } catch(e) {
-    const error = {
-      message: e.message,
-      code: Code.AUTHOR_DELETE_ERROR_CODE,
-      success: false
-    }
-    ctx.body = error
-  }
-}
-
-
 export {
   fetchAuthors, // 获取所有作者
   fetchAuthorById, // 获取某一个作者
-  createAuthor, // 添加一个作者
   updateAuthorById, // 更新一个作者
-  deleteAuthorById, // 删除一个作者
 }

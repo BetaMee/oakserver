@@ -5,6 +5,7 @@
         "node": "current"
       },
       "useBuiltIns": true
-    }]
+    }],
+    "stage-2"
   ]
 }

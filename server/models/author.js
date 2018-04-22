@@ -1,7 +1,7 @@
 // 引入docClient操作数据库
 import { docClient } from '../config/aws'
 
-import { AUTHOR_TABLE } from '../config/tables'
+import { USER_TABLE } from '../config/tables'
 
 const AuthorModel = {
   // 获取所有作者
@@ -11,21 +11,12 @@ const AuthorModel = {
   // 获取某一个作者
   getByAuthorId: (authorId) => {
     const params = {
-      TableName: AUTHOR_TABLE,
+      TableName: USER_TABLE,
       Key:{
-        'authorId': authorId
+        'userId': authorId
       }
     }
     return docClient.get(params).promise()
-  },
-  // 添加一个作者
-  create: (author) => {
-    const params = {
-      TableName: AUTHOR_TABLE,
-      Item: author,
-      ReturnValues: 'ALL_OLD'
-    }
-    return docClient.put(params).promise()
   },
   // 更新一个作者
   updateByAuthorId: (authorId, toUpdateAuthor) => {
@@ -39,20 +30,16 @@ const AuthorModel = {
     } = toUpdateAuthor
     // 更新参数
     const params = {
-      TableName: AUTHOR_TABLE,
+      TableName: USER_TABLE,
       Key:{
-        'authorId' : authorId
+        'userId' : authorId
       },
       ConditionExpression: '#id = :id',
-      UpdateExpression: 'set #n = :n, #g = :g, #e = :e, #s = :s, #a = :a, #u = :u',
+      UpdateExpression: 'set #n = :n, #p.gender = :g, #p.email = :e, #p.social = :s, #p.avatar = :a, #p.updatedAt = :u',
       ExpressionAttributeNames: {
-        '#id': 'authorId',
-        '#n': 'name',
-        '#g': 'gender',
-        '#e': 'email',
-        '#s': 'social',
-        '#a': 'avatar',
-        '#u': 'updatedAt'
+        '#id': 'userId',
+        '#n': 'username',
+        '#p': 'profile',
       },
       ExpressionAttributeValues:{
         ':id': authorId,
@@ -67,16 +54,6 @@ const AuthorModel = {
     }
     return docClient.update(params).promise()
 
-  },
-  // 删除一个作者
-  deleteByAuthorId: (authorId) => {
-    const params = {
-      TableName: AUTHOR_TABLE,
-      Key:{
-        'authorId' : authorId
-      },
-    }
-    return docClient.delete(params).promise()
   }
 }
 
