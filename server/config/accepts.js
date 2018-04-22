@@ -1,32 +1,32 @@
 export default {
   // 支持的文件类型
-  image: [
+  images: [
     'image/jpeg',
     'image/jpg',
     'image/png'
   ],
-  file: [
+  files: [
     'application/msword'
   ],
-  video: [
+  videos: [
 
   ],
-  audio: [
+  audios: [
 
   ],
-  avatar: [
+  avatars: [
     'image/jpeg',
     'image/jpg',
     'image/png'
   ],
   // 文件的归档类型
-  __IMAGE__: 'image',
+  __IMAGE__: 'images',
 
-  __FILE__: 'file',
+  __FILE__: 'files',
 
-  __VIDEO__: 'video',
+  __VIDEO__: 'videos',
 
-  __AUDIO__: 'audio',
+  __AUDIO__: 'audios',
 
-  __AVATAR__: 'avatar'
+  __AVATAR__: 'avatars'
 }
