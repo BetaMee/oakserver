@@ -62,8 +62,10 @@ const uploadImageAssets = async (ctx, next) => {
     if (!accepts[accepts.__IMAGE__].includes(mimetype)) {
       throw(new Error('File type is not accepted'))
     }
+    // 存储的文件名
+    const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
-    const uploadedAsset = await AssetsModel.uploadToS3(buffer, originalname, accepts.__IMAGE__)
+    const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__IMAGE__)
 
     const assetItem = {
       attachKey: userId, // 文件归属
@@ -116,8 +118,10 @@ const uploadFileAssets = async (ctx, next) => {
     if (!accepts[accepts.__FILE__].includes(mimetype)) {
       throw(new Error('File type is not accepted'))
     }
+    // 存储的文件名
+    const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
-    const uploadedAsset = await AssetsModel.uploadToS3(buffer, originalname, accepts.__FILE__)
+    const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__FILE__)
 
     const assetItem = {
       attachKey: userId, // 文件归属
@@ -170,8 +174,10 @@ const uploadVdieoAssets = async (ctx, next) => {
     if (!accepts[accepts.__VIDEO__].includes(mimetype)) {
       throw(new Error('File type is not accepted'))
     }
+    // 存储的文件名
+    const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
-    const uploadedAsset = await AssetsModel.uploadToS3(buffer, originalname, accepts.__VIDEO__)
+    const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__VIDEO__)
 
     const assetItem = {
       attachKey: userId, // 文件归属
@@ -224,8 +230,10 @@ const uploadAudioAssets = async (ctx, next) => {
     if (!accepts[accepts.__AUDIO__].includes(mimetype)) {
       throw(new Error('File type is not accepted'))
     }
+    // 存储的文件名
+    const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
-    const uploadedAsset = await AssetsModel.uploadToS3(buffer, originalname, accepts.__AUDIO__)
+    const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__AUDIO__)
 
     const assetItem = {
       attachKey: userId, // 文件归属
@@ -278,8 +286,10 @@ const uploadAvatarAssets = async (ctx, next) => {
     if (!accepts[accepts.__AVATAR__].includes(mimetype)) {
       throw(new Error('File type is not accepted'))
     }
+    // 存储的文件名
+    const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
-    const uploadedAsset = await AssetsModel.uploadToS3(buffer, originalname, accepts.__AVATAR__)
+    const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__AVATAR__)
 
     const assetItem = {
       attachKey: userId, // 文件归属

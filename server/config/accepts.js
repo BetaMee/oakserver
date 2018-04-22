@@ -6,10 +6,17 @@ export default {
     'image/png'
   ],
   files: [
-    'application/msword'
+    'application/msword', // .doc
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+    'application/vnd.ms-powerpoint', // .ppt
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
+    'application/vnd.ms-excel', // .xls
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlxs
+    'application/pdf', // .pdf
+  
   ],
   videos: [
-
+    'video/mp4' // .mp4
   ],
   audios: [
 
