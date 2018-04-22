@@ -8,12 +8,11 @@ const UserModel = {
 
   },
   // 获取某一个用户
-  getByUserId: (userId, username) => {
+  getByUserId: (userId) => {
     const params = {
       TableName: USER_TABLE,
       Key:{
-        'userId': userId,
-        'username': username
+        'userId': userId
       }
     }
     return docClient.get(params).promise()
@@ -43,19 +42,17 @@ const UserModel = {
     return docClient.put(params).promise()
   },
   // 更新用户状态
-  updateUserStatus: (userId, username, newUserStatus) => {    
+  updateUserStatus: (userId, newUserStatus) => {    
     // 更新参数
     const params = {
       TableName: USER_TABLE,
       Key:{
-        'userId' : userId,
-        'username': username
+        'userId' : userId
       },
-      ConditionExpression: '#id = :id and #ud = :ud',
+      ConditionExpression: '#id = :id',
       UpdateExpression: 'set #status.#token = :t, #status.#isExpired = :e, #status.#createdMoment = :cm, #status.#expiredMoment = :em',
       ExpressionAttributeNames: {
         '#id': 'userId',
-        '#ud': 'username',
         '#status': 'status',
         '#token': 'token',
         '#isExpired': 'isExpired',
@@ -64,7 +61,6 @@ const UserModel = {
       },
       ExpressionAttributeValues:{
         ':id': userId,
-        ':ud': username,
         ':t': newUserStatus.token,
         ':e': newUserStatus.isExpired,
         ':cm': newUserStatus.createdMoment,
@@ -80,8 +76,7 @@ const UserModel = {
     const params = {
       TableName: USER_TABLE,
       Key:{
-        'userId' :userId,
-        'username': username
+        'userId' :userId
       },
       ConditionExpression: '#id = :id',
       UpdateExpression: 'set #u = :u, #p = :p',
@@ -100,12 +95,11 @@ const UserModel = {
     return docClient.update(params).promise()
   },
   // 通过userId删除一个作者
-  deletebyUserId: (userId, username) => {
+  deletebyUserId: (userId) => {
     const params = {
       TableName: USER_TABLE,
       Key:{
-        'userId' : userId,
-        'username': username
+        'userId' : userId
       },
     }
     return docClient.delete(params).promise()

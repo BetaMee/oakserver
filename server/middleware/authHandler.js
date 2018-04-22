@@ -9,7 +9,7 @@ export default ({unlessPath = [], unlessMethod = []}) => {
     secret: JWT_SECRECT,
     isRevoked: async (ctx, decodedToken, token ) => { // 判断是否需要丢弃Token
       // 只有一种情况需要丢弃Token，就是注销时，清空user status的数据
-      const result = await UserModel.getByUserId(decodedToken.userId, decodedToken.username)
+      const result = await UserModel.getByUserId(decodedToken.userId)
       const user = result.Item
       const isNeedRevoke = user && user.status && user.status.isExpired
       // 返回true说明是被废弃

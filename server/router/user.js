@@ -16,5 +16,4 @@ UserRoute
   // 注册
   .post('/register', userRegister)
 
-
 export default UserRoute

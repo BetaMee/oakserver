@@ -1,6 +1,5 @@
 import {
   UserModel,
-  AuthorModel
 } from '../models'
 
 import * as utils from '../utils'
@@ -25,9 +24,7 @@ const userRegister = async (ctx, next) => {
       // 生成时间戳
       const currentDate = utils.getCurrentDate(new Date())
       // 生成新作者，数据是默认值
-      const newAuthor = {
-        authorId: utils.generateUniqueID(),
-        name: username,
+      const defaultUserProfile = {
         gender: 'F',
         email: '',
         social: '',
@@ -35,23 +32,19 @@ const userRegister = async (ctx, next) => {
         createdAt: currentDate,
         updatedAt: currentDate
       }
-      // 新用户，创建统一的profile
-      await AuthorModel.create(newAuthor)
-
       // 注册进用户数据库
       const HashPassword = utils.encryptPassword(password)
+      // 新的userId
+      const userId = utils.generateUniqueID()
+      // 生成新的token，后续可以直接登录
+      const newUserStatus = utils.generateTokenStatus(userId, { expiresIn: '1 days' })
 
       const newUser = {
-        userId: utils.generateUniqueID(),
+        userId: userId,
         username: username,
         password: HashPassword,
-        profileId: newAuthor.authorId,
-        status: {
-          isExpired: true, // 默认为过期
-          token: '', // 等登陆后才有填充数据
-          createdMoment: '', // 创建时间
-          expiredMoment: '' // 过期时间
-        }
+        profile: defaultUserProfile,
+        status: newUserStatus
       }
       // 创建用户
       await UserModel.create(newUser)
@@ -61,9 +54,9 @@ const userRegister = async (ctx, next) => {
         userInfo: {
           userId: newUser.userId,
           username: newUser.username,
-          profileId: newUser.profileId
+          profile: newUser.profile,
         },
-        token: '',
+        token: newUserStatus.token,
         success: true,
         code: Code.USER_REGISTER_SUCCESS_CODE,
       }
@@ -109,17 +102,18 @@ const userLogin = async (ctx, next) => {
 
       if (existUser.password === HashPassword) {
         // 判断是否需要生成新状态
-        const newUserStatus = utils.generateStatus(existUser, { expiresIn: '1 days' })
+        const updatedUserStatus = utils.updateTokenStatus(existUser, { expiresIn: '1 days' })
         // 设置登录状态
-        await UserModel.updateUserStatus(existUser.userId, existUser.username, newUserStatus)
+        await UserModel.updateUserStatus(existUser.userId, updatedUserStatus)
         // 密码正确，成功登录
         response = {
           message: Code.USER_LOGIN_SUCCESS,
           success: true,
           code: Code.USER_LOGIN_SUCCESS_CODE,
-          token: newUserStatus.token,
+          token: updatedUserStatus.token,
           userId: existUser.userId,
-          profileId: existUser.profileId // 用户profile信息ID
+          username: existUser.username,
+          profile: existUser.profile // 用户profile
         }
       } else {
         // 密码不正确
