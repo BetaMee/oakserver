@@ -13,9 +13,7 @@ import {
   // Author
   fetchAuthors, // 获取所有作者
   fetchAuthorById, // 获取某一个作者
-  createAuthor, // 添加一个作者
   updateAuthorById, // 更新一个作者
-  deleteAuthorById, // 删除一个作者
   // Archive
   fetchArchives, // 获取所有归档类
   fetchArchiveById, // 获取某一个归档
@@ -38,10 +36,8 @@ RestRouter
   .del('/article/delete/:articleId', deleteArticleById) // 删除一篇文章
   // Author
   .get('/author', fetchAuthors) // 获取所有作者
-  .get('/author/:authorId', fetchAuthorById) // 获取某一个作者
-  .post('/author/create', createAuthor) // 添加一个作者
-  .put('/author/update/:authorId', updateAuthorById) // 更新一个作者
-  .del('/author/delete/:authorId', deleteAuthorById) // 删除一个作者
+  .get('/author/:authorId', fetchAuthorById) // 获取某一个作者profile
+  .put('/author/update/:authorId', updateAuthorById) // 更新一个作者profile
   // Archive
   .get('/archive', fetchArchives) // 获取所有归档类
   .get('/archive/:archiveId', fetchArchiveById) // 获取某一个归档

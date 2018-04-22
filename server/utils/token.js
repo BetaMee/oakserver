@@ -5,20 +5,46 @@ import {
   JWT_SECRECT
 } from '../config/secret'
 
+const generateTokenStatus = (userId, expiresIn = {}) => {
+  // 正则获取expiredIn参数
+  const expiresParam = expiresIn.expiresIn
+  const expiresAmount = parseInt(/^\d+\.{0,1}\d*/.exec(expiresParam)[0])
+  const expiresUnit = expiresParam.replace(/^\d+\.{0,1}\d*\s*/g, '')
+
+  const newToken = jwt.sign(
+    {
+      userId: userId,
+    },
+    JWT_SECRECT,
+    expiresIn
+  )
+
+  // 当前moment对象
+  const currentMoment = moment()
+
+  const currentMomentString = currentMoment.format() // 创建时刻
+  const expiredMomentString = currentMoment.add(expiresAmount, expiresUnit).format() // 过期时刻，1天后
+
+  return {
+    isExpired: false,
+    token: newToken,
+    createdMoment: currentMomentString,
+    expiredMoment: expiredMomentString
+  }
+}
 
 // 根据时效判断是否需要签发新的Token
-const generateStatus = (user, expiresIn = {}) => {
+const updateTokenStatus = (user, expiresIn = {}) => {
   // 正则获取expiredIn参数
   const expiresParam = expiresIn.expiresIn
   const expiresAmount = parseInt(/^\d+\.{0,1}\d*/.exec(expiresParam)[0])
   const expiresUnit = expiresParam.replace(/^\d+\.{0,1}\d*\s*/g, '')
   const { status } = user
-  // isExpired为True，表明要么是刚生成用户，要么是已登出，则直接生成新Token
+  // isExpired为True，表明已过期，则直接生成新Token
   if (status.isExpired) {
     const newToken = jwt.sign(
       {
-        userId: user.userId,
-        username: user.username
+        userId: user.userId
       },
       JWT_SECRECT,
       expiresIn
@@ -49,8 +75,7 @@ const generateStatus = (user, expiresIn = {}) => {
     if (isNearExipred) {
       const newToken = jwt.sign(
         {
-          userId: user.userId,
-          username: user.username
+          userId: user.userId
         },
         JWT_SECRECT,
         expiresIn
@@ -72,5 +97,6 @@ const generateStatus = (user, expiresIn = {}) => {
 }
 
 export {
-  generateStatus
+  generateTokenStatus,
+  updateTokenStatus
 }
