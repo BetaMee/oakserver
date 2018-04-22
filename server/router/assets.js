@@ -11,7 +11,8 @@ import {
   uploadVdieoAssets,
   uploadAudioAssets,
   uploadAvatarAssets,
-  deleteAssetsByKey
+  deleteAssetsByKey,
+  updateAssetsByKey
 } from '../controllers'
 
 const AssetsRuter = Router()
@@ -19,6 +20,8 @@ const AssetsRuter = Router()
 AssetsRuter
   // 获取所属资源
   .get('/:archiveType/:userId', fetchAssets)
+  // 更新资源
+  .put('/update/:assetkey', updateAssetsByKey)
   // 删除文件
   .del('/delete/:assetkey', deleteAssetsByKey)
   // 上传图片

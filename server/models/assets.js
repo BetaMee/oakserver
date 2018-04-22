@@ -78,12 +78,35 @@ const AssetsModel = {
     return docClient.query(params).promise()
   },
   // 更新表中的对应资源
-  updateUserAssets: (assetKey) => {
-
+  updateUserAssets: (assetKey, toUpdateAsset) => {
+    const {
+      assetName,
+      description
+    } = toUpdateAsset
+    // 更新参数
+    const params = {
+      TableName: ASSETS_TABLE,
+      Key:{
+        'assetKey': assetKey
+      },
+      ConditionExpression: '#id = :id',
+      UpdateExpression: 'set #t = :t, #d = :d',
+      ExpressionAttributeNames: {
+        '#id': 'assetKey',
+        '#t': 'assetName',
+        '#d': 'description',
+      },
+      ExpressionAttributeValues:{
+        ':id': assetKey,
+        ':t': assetName,
+        ':d': description,
+      },
+      ReturnValues: 'ALL_NEW'
+    }
+    return docClient.update(params).promise()
   },
   // 删除表中的对应资源
   deleteUserAssets: (assetKey) => {
-    console.log(assetKey)
     const params = {
       TableName: ASSETS_TABLE,
       Key:{
