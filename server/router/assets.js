@@ -9,7 +9,7 @@ import {
   uploadImageAssets,
   uploadFileAssets,
   uploadVdieoAssets,
-  uploadAduioAssets,
+  uploadAudioAssets,
   uploadAvatarAssets,
   deleteAssetsByKey
 } from '../controllers'
@@ -17,8 +17,10 @@ import {
 const AssetsRuter = Router()
 
 AssetsRuter
-  // 获取资源
-  .get('/:userId/:archiveType', fetchAssets)
+  // 获取所属资源
+  .get('/:archiveType/:userId', fetchAssets)
+  // 删除文件
+  .del('/delete/:assetkey', deleteAssetsByKey)
   // 上传图片
   .post('/upload/image', upload.single('image'), uploadImageAssets)
   // 上传文件
@@ -26,10 +28,8 @@ AssetsRuter
   // 上传视频文件
   .post('/upload/video', upload.single('video'), uploadVdieoAssets)
   // 上传音频
-  .post('/upload/aduio', upload.single('aduio'), uploadAduioAssets)
+  .post('/upload/audio', upload.single('audio'), uploadAudioAssets)
   // 上传头像
   .post('/upload/avatar', upload.single('avatar'), uploadAvatarAssets)
-  // 删除文件
-  .del('/delete/:assetskey', deleteAssetsByKey)
 
 export default AssetsRuter
