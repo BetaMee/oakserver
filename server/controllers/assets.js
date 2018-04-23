@@ -314,7 +314,7 @@ const fetchAssets = async (ctx, next) => {
       message: Code.ASSET_GET_SUCCESS,
       code: Code.ASSET_GET_SUCCESS_CODE,
       success: true,
-      item: Items
+      items: Items
     }
     ctx.body = result
   } catch(e) {
