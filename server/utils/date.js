@@ -1,3 +1,4 @@
+import moment from 'moment'
 /** 
  * date.getDay()映射到日期
 */
@@ -18,6 +19,11 @@ const getCurrentDate = (date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()} ${WeekDay[date.getDay()]}`
 }
 
+const getCurrentMoment = () => {
+  return moment().format()
+}
+
 export {
-  getCurrentDate
+  getCurrentDate,
+  getCurrentMoment
 }

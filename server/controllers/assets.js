@@ -29,6 +29,10 @@ const uploadImageAssets = async (ctx, next) => {
     const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
     const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__IMAGE__)
+    // 生成创建时间
+    const currentDate = utils.getCurrentMoment()
+    const createdAt = currentDate
+    const updatedAt = currentDate
 
     const assetItem = {
       attachKey: userId, // 文件归属
@@ -39,7 +43,9 @@ const uploadImageAssets = async (ctx, next) => {
       assetSize: size, // 文件尺寸
       archiveType: accepts.__IMAGE__, // 归档类型
       ETag: uploadedAsset.ETag, // 文件的ETag标签
-      description: 'This is a image' // 文件描述
+      description: 'This is a image', // 文件描述
+      createdAt: createdAt, // 创建时间
+      updatedAt: updatedAt // 更新时间
     }
     // 写入数据库
     await AssetsModel.addUserAssets(assetItem)
