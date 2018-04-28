@@ -81,7 +81,8 @@ const AssetsModel = {
   updateUserAssets: (assetKey, toUpdateAsset) => {
     const {
       assetName,
-      description
+      description,
+      updatedAt
     } = toUpdateAsset
     // 更新参数
     const params = {
@@ -90,16 +91,18 @@ const AssetsModel = {
         'assetKey': assetKey
       },
       ConditionExpression: '#id = :id',
-      UpdateExpression: 'set #t = :t, #d = :d',
+      UpdateExpression: 'set #t = :t, #d = :d, #u = :u',
       ExpressionAttributeNames: {
         '#id': 'assetKey',
         '#t': 'assetName',
         '#d': 'description',
+        '#u': 'updatedAt',
       },
       ExpressionAttributeValues:{
         ':id': assetKey,
         ':t': assetName,
         ':d': description,
+        ':u': updatedAt
       },
       ReturnValues: 'ALL_NEW'
     }

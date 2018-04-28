@@ -19,7 +19,7 @@ const convertAssetKeyToS3Key = (assetKey) => {
 }
 
 const convertOriginNameToUnique = (ariginalName) => {
-  const extension = /\.[a-z]{2,}$/.exec(ariginalName)
+  const extension = /\.[a-z]{2,}$/.exec(ariginalName)[0]
   if (extension) {
     return `${generateUniqueID()}${extension}`
   } else {

@@ -27,6 +27,7 @@ const uploadImageAssets = async (ctx, next) => {
     }
     // 存储的文件名
     const storagedName = utils.convertOriginNameToUnique(originalname)
+    console.log(storagedName)
     // 上传到S3中
     const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__IMAGE__)
     // 生成创建时间
@@ -92,6 +93,10 @@ const uploadFileAssets = async (ctx, next) => {
     const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
     const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__FILE__)
+    // 生成创建时间
+    const currentDate = utils.getCurrentMoment()
+    const createdAt = currentDate
+    const updatedAt = currentDate
 
     const assetItem = {
       attachKey: userId, // 文件归属
@@ -102,7 +107,9 @@ const uploadFileAssets = async (ctx, next) => {
       assetSize: size, // 文件尺寸
       archiveType: accepts.__FILE__, // 归档类型
       ETag: uploadedAsset.ETag, // 文件的ETag标签
-      description: 'This is a file' // 文件描述
+      description: 'This is a file', // 文件描述
+      createdAt: createdAt, // 创建时间
+      updatedAt: updatedAt // 更新时间
     }
     // 写入数据库
     await AssetsModel.addUserAssets(assetItem)
@@ -149,6 +156,10 @@ const uploadVdieoAssets = async (ctx, next) => {
     const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
     const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__VIDEO__)
+    // 生成创建时间
+    const currentDate = utils.getCurrentMoment()
+    const createdAt = currentDate
+    const updatedAt = currentDate
 
     const assetItem = {
       attachKey: userId, // 文件归属
@@ -159,7 +170,9 @@ const uploadVdieoAssets = async (ctx, next) => {
       assetSize: size, // 文件尺寸
       archiveType: accepts.__VIDEO__, // 归档类型
       ETag: uploadedAsset.ETag, // 文件的ETag标签
-      description: 'This is a vdieo' // 文件描述
+      description: 'This is a vdieo', // 文件描述
+      createdAt: createdAt, // 创建时间
+      updatedAt: updatedAt // 更新时间
     }
     // 写入数据库
     await AssetsModel.addUserAssets(assetItem)
@@ -206,6 +219,10 @@ const uploadAudioAssets = async (ctx, next) => {
     const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
     const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__AUDIO__)
+    // 生成创建时间
+    const currentDate = utils.getCurrentMoment()
+    const createdAt = currentDate
+    const updatedAt = currentDate
 
     const assetItem = {
       attachKey: userId, // 文件归属
@@ -216,7 +233,9 @@ const uploadAudioAssets = async (ctx, next) => {
       assetSize: size, // 文件尺寸
       archiveType: accepts.__AUDIO__, // 归档类型
       ETag: uploadedAsset.ETag, // 文件的ETag标签
-      description: 'This is a audio' // 文件描述
+      description: 'This is a audio', // 文件描述
+      createdAt: createdAt, // 创建时间
+      updatedAt: updatedAt // 更新时间
     }
     // 写入数据库
     await AssetsModel.addUserAssets(assetItem)
@@ -263,6 +282,10 @@ const uploadAvatarAssets = async (ctx, next) => {
     const storagedName = utils.convertOriginNameToUnique(originalname)
     // 上传到S3中
     const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__AVATAR__)
+    // 生成创建时间
+    const currentDate = utils.getCurrentMoment()
+    const createdAt = currentDate
+    const updatedAt = currentDate
 
     const assetItem = {
       attachKey: userId, // 文件归属
@@ -273,7 +296,9 @@ const uploadAvatarAssets = async (ctx, next) => {
       assetSize: size, // 文件尺寸
       archiveType: accepts.__AVATAR__, // 归档类型
       ETag: uploadedAsset.ETag, // 文件的ETag标签
-      description: 'This is a avatar' // 文件描述
+      description: 'This is a avatar', // 文件描述
+      createdAt: createdAt, // 创建时间
+      updatedAt: updatedAt // 更新时间
     }
     // 写入数据库
     await AssetsModel.addUserAssets(assetItem)
@@ -347,9 +372,14 @@ const updateAssetsByKey = async (ctx, next) => {
     assetName,
     description
   } = ctx.request.body
+
+  // 生成创建时间
+  const updatedAt = utils.getCurrentMoment()
+
   const toUpdateAsset = {
     assetName,
-    description
+    description,
+    updatedAt,
   }
   try {
     // 更新数据库里的数据
