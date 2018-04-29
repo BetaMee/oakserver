@@ -27,7 +27,6 @@ const uploadImageAssets = async (ctx, next) => {
     }
     // 存储的文件名
     const storagedName = utils.convertOriginNameToUnique(originalname)
-    console.log(storagedName)
     // 上传到S3中
     const uploadedAsset = await AssetsModel.uploadToS3(buffer, storagedName, accepts.__IMAGE__)
     // 生成创建时间
