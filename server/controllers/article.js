@@ -11,7 +11,30 @@ import Code from '../config/code'
  * @param {*} next 
  */
 const fetchArticles = async (ctx, next) => {
-
+  try {
+    const articles = await ArticleModel.getAll()
+    let Items
+    if (articles.Count === 0) {
+      Items = []
+    } else {
+      Items = articles.Items
+    }
+    const result = {
+      action: 'QUERY',
+      message: Code.ARTICLE_GETALL_SUCCESS,
+      code: Code.ARTICLE_GETALL_SUCCESS_CODE,
+      success: true,
+      items: Items
+    }
+    ctx.body = result
+  } catch(e) {
+    const error = {
+      message: e.message,
+      code: Code.ARTICLE_GETALL_ERROR_CODE,
+      success: false
+    }
+    ctx.body = error
+  }
 }
 
 /**

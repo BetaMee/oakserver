@@ -9,7 +9,10 @@ import {
 const ArticleModel = {
   // 获取所有文章信息
   getAll: () => {
-    
+    const params = {
+      TableName: ARTICLE_TABLE,
+    }
+    return docClient.scan(params).promise()  
   },
   // 通过articleId获取文章信息
   getByArticleId: (articleId) => {
