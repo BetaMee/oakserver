@@ -8,7 +8,7 @@ const endpointUrl = process.env.NODE_ENV === 'production'
 
 AWS.config.update({
   region: 'ap-northeast-1',
-  endpoint: endpointUrl
+  // endpoint: endpointUrl
 })
 // 设置AWS SDK支持Promise
 AWS.config.setPromisesDependency(global.Promise)

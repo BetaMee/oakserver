@@ -15,7 +15,23 @@ const authorResolverMap = {
         console.log(e)
         return []
       }
-    }
+    },
+    archives: async (author, args, context) => {
+      const { ArchiveModel } = context.DBModel
+      const { authorId } = author
+      // 通过authorId来查询对应文章
+      try {
+        const archives = await ArchiveModel.queryAllByAttachId(authorId)
+        if (archives.Count === 0) {
+          return []
+        } else {
+          return archives.Items
+        }
+      } catch(e) {
+        console.log(e)
+        return []
+      }
+    },
   }
 }
 

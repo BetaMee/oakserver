@@ -1,4 +1,5 @@
 import Article from './article'
+import Author from './author'
 
 /**
  * ArchiveSchema
@@ -6,6 +7,7 @@ import Article from './article'
 const Archive = `
   type Archive {
     archiveId: String!
+    attach: Author
     name: String
     updatedAt: String
     createdAt: String
@@ -13,4 +15,4 @@ const Archive = `
   }
 `
 
-export default () => [Archive, Article]
+export default () => [Archive, Article, Author]

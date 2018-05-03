@@ -15,5 +15,7 @@ UserRoute
   .post('/logout', userLogout)
   // 注册
   .post('/register', userRegister)
+  // 删号
+  // .post('/delete', userDelete)
 
 export default UserRoute

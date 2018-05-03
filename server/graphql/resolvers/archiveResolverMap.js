@@ -15,6 +15,26 @@ const archiveResolverMap = {
         console.log(e)
         return []
       }
+    },
+    attach: async (archive, args, context) => {
+      const { AuthorModel } = context.DBModel
+      const { attachId } = archive
+      // 通过attachId来查询对应作者信息
+      try {
+        const author = await AuthorModel.getByAuthorId(attachId)
+        // 返回的结果
+        let Item = null
+        if(author.Item) {
+          Item = {
+            name: author.Item.username,
+            ...author.Item.profile,
+          }
+        }
+        return Item
+      } catch(e) {
+        console.log(e)
+        return null
+      }
     }
   }
 }

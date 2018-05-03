@@ -1,4 +1,5 @@
 import Article from './article'
+import Archive from './archive'
 
 /**
  * AuthorSchema
@@ -14,7 +15,8 @@ const Author = `
     email: String
     social: String
     articles: [Article]!
+    archives: [Archive]!
   }
 `
 
-export default () => [Author, Article]
+export default () => [Author, Article, Archive]

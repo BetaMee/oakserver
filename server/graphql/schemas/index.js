@@ -8,18 +8,24 @@ import InputTypes from './InputTypes'
 // 查询
 const RootQuery = `
   type Query {
-    # 获取某个Author下的信息
-    author(authorId: String!): Author
     # 获取某个Archive下的数据
     archive(archiveId: String!): Archive
+    # 通过attachId获取对应所有的archives
+    attachedArchives(attachId: String!): [Archive]
+
+    # 获取某个Author下的信息
+    author(authorId: String!): Author
+    # 获取所有Authors
+    allAuthors: [Author]
+    
     # 获取某个Article下的数据
     article(articleId: String!): Article
     # 获取所有Articles，具有分页功能
-    articles(limit: Int, offset: Int, sort: String): [Article]
-    # 获取所有Authors
-    authors: [Author]
-    # 获取所有Archives
-    archives: [Archive]
+    allArticles(limit: Int, offset: Int, sort: String): [Article]
+    # 某归档类下有多少文章
+    articlesByArchiveId(archiveId: String!): [Article]
+    # 某作者下有多少文章
+    articlesByAuthorId(authorId: String!): [Article]
   }
 `
 
@@ -28,22 +34,20 @@ const RootMutation = `
   type Mutation {
     # 创建一个新的文章
     createArticle(article: ArticleInput!): Article
-    # 创建一个新作者
-    createAuthor(author: AuthorInput!): Author
-    # 创建一个新归档
-    createArchive(archive: ArchiveInput!): Archive
     # 更新一个文章
     updateArticle(articleId: String!, toUpdateParam: ArticleInput!): Article
-    # 更新一个作者
-    updateAuthor(authorId: String!, toUpdateParam: AuthorInput!): Author
-    # 更新一个归档
-    updateArchive(archiveId: String!, toUpdateParam: ArchiveInput!): Archive
     # 删除一个文章
     deleteArticle(articleId: String!): Article
-    # 删除一个作者
-    deleteAuthor(authorId: String!): Author
+
+    # 创建一个新归档
+    createArchive(archive: ArchiveInput!): Archive
+    # 更新一个归档
+    updateArchive(archiveId: String!, toUpdateParam: ArchiveInput!): Archive
     # 删除一个归档
     deleteArchive(archiveId: String!): Archive
+   
+    # 更新一个作者
+    updateAuthor(authorId: String!, toUpdateParam: AuthorInput!): Author
   }
 `
 // 最终的顶层查询描述接口
