@@ -129,7 +129,8 @@ const updateArchiveById = async (ctx, next) => {
   const updatedAt = utils.getCurrentDate(new Date())
   // 获取可以更新的字段
   const {
-    name
+    name,
+    attachId
   } = ctx.request.body
   // 更新的对象
   const toUpdateArchive = {
@@ -137,15 +138,21 @@ const updateArchiveById = async (ctx, next) => {
     updatedAt
   }
   try {
-    const updatedArchive = await ArchiveModel.updateByArchiveId(archiveId, toUpdateArchive)
-    const result = {
-      action: 'UPDATE',
-      message: Code.ARCHIVE_UPDATE_SUCCESS,
-      code: Code.ARCHIVE_UPDATE_SUCCESS_CODE,
-      success: true,
-      item: updatedArchive.Attributes
+    // 判断是否是旧的名字
+    const queriedArchive = await ArchiveModel.queryByArchiveName(name, attachId)
+    if (queriedArchive.Count === 0) {
+      const updatedArchive = await ArchiveModel.updateByArchiveId(archiveId, toUpdateArchive)
+      const result = {
+        action: 'UPDATE',
+        message: Code.ARCHIVE_UPDATE_SUCCESS,
+        code: Code.ARCHIVE_UPDATE_SUCCESS_CODE,
+        success: true,
+        item: updatedArchive.Attributes
+      }
+      ctx.body = result
+    } else {
+      throw new Error('archive name has been used')
     }
-    ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,

@@ -1,5 +1,6 @@
 import {
-  AuthorModel
+  AuthorModel,
+  UserModel
 } from '../models'
 
 import * as utils from '../utils'
@@ -93,33 +94,38 @@ const updateAuthorById = async (ctx, next) => {
     social,
     avatar,
   } = ctx.request.body
-  // 更新的对象
-  const toUpdateAuthor = {
-    name,
-    gender,
-    email,
-    social,
-    avatar,
-    updatedAt
-  }
   try {
-    const updatedAuthor = await AuthorModel.updateByAuthorId(authorId, toUpdateAuthor)
-    // 返回的结果
-    let Item = null
-    if(updatedAuthor.Attributes) {
-      Item = {
-        name: updatedAuthor.Attributes.username,
-        ...updatedAuthor.Attributes.profile,
+    const queriedUser = await UserModel.queryByUsername(name)
+    if (queriedUser.Count === 0) {
+      // 更新的对象
+      const toUpdateAuthor = {
+        name,
+        gender,
+        email,
+        social,
+        avatar,
+        updatedAt
       }
+      const updatedAuthor = await AuthorModel.updateByAuthorId(authorId, toUpdateAuthor)
+      // 返回的结果
+      let Item = null
+      if(updatedAuthor.Attributes) {
+        Item = {
+          name: updatedAuthor.Attributes.username,
+          ...updatedAuthor.Attributes.profile,
+        }
+      }
+      const result = {
+        action: 'UPDATE',
+        message: Code.AUTHOR_UPDATE_SUCCESS,
+        code: Code.AUTHOR_UPDATE_SUCCESS_CODE,
+        success: true,
+        item: Item
+      }
+      ctx.body = result
+    } else {
+      throw new Error('author name has been used')
     }
-    const result = {
-      action: 'UPDATE',
-      message: Code.AUTHOR_UPDATE_SUCCESS,
-      code: Code.AUTHOR_UPDATE_SUCCESS_CODE,
-      success: true,
-      item: Item
-    }
-    ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
