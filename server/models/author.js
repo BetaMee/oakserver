@@ -6,7 +6,10 @@ import { USER_TABLE } from '../config/tables'
 const AuthorModel = {
   // 获取所有作者
   getAll: () => {
-
+    const params = {
+      TableName: USER_TABLE,
+    }
+    return docClient.scan(params).promise()  
   },
   // 获取某一个作者
   getByAuthorId: (authorId) => {

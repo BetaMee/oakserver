@@ -11,7 +11,33 @@ import Code from '../config/code'
  * @param {*} next 
  */
 const fetchAuthors = async (ctx, next) => {
-  ctx.body = '<h1>fetchAuthors</h1>'
+  try {
+    const authors = await AuthorModel.getAll()
+    let Items
+    if (authors.Count === 0) {
+      Items = []
+    } else {
+      Items = authors.Items.map(item => ({
+        name: item.username,
+        ...item.profile,
+      }))
+    }
+    const result = {
+      action: 'QUERY',
+      message: Code.AUTHOR_GETALL_SUCCESS,
+      code: Code.AUTHOR_GETALL_SUCCESS_CODE,
+      success: true,
+      items: Items
+    }
+    ctx.body = result
+  } catch(e) {
+    const error = {
+      message: e.message,
+      code: Code.AUTHOR_GETALL_ERROR_CODE,
+      success: false
+    }
+    ctx.body = error
+  }
 }
 
 /**
