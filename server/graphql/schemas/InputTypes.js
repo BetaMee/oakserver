@@ -5,7 +5,7 @@ const InputTypes = `
     title: String!
     content: String!
     author: String
-    archive: String
+    archive: String!
   }
   # 创建作者的输入类型
   input AuthorInput {
@@ -18,6 +18,7 @@ const InputTypes = `
   # 创建归档的输入类型
   input ArchiveInput {
     name: String!
+    attachId: String!
   }
 `
 

@@ -37,14 +37,14 @@ const RootMutation = `
     # 更新一个文章
     updateArticle(articleId: String!, toUpdateParam: ArticleInput!): Article
     # 删除一个文章
-    deleteArticle(articleId: String!): Article
+    deleteArticle(articleId: String!): String
 
     # 创建一个新归档
     createArchive(archive: ArchiveInput!): Archive
     # 更新一个归档
     updateArchive(archiveId: String!, toUpdateParam: ArchiveInput!): Archive
     # 删除一个归档
-    deleteArchive(archiveId: String!): Archive
+    deleteArchive(archiveId: String!): String
    
     # 更新一个作者
     updateAuthor(authorId: String!, toUpdateParam: AuthorInput!): Author
