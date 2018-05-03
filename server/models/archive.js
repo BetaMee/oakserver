@@ -5,9 +5,38 @@ import {
 } from '../config/tables'
 
 const ArchiveModel = {
-  // 获取所有Archive信息
-  getAll: () => {
-
+  // 获取对应用户所有Archive资源
+  queryAllByAttachId: (attachId) => {
+    const params = {
+      TableName : ARCHIVE_TABLE,
+      IndexName : 'attachIndex',
+      KeyConditionExpression: '#a = :a',
+      ExpressionAttributeNames:{
+        '#a': 'attachId',
+      },
+      ExpressionAttributeValues: {
+        ':a': attachId,
+      }
+    }
+    return docClient.query(params).promise()
+  },
+  // 通过archivename查询
+  queryByArchiveName: (name, attachId) => {
+    const params = {
+      TableName : ARCHIVE_TABLE,
+      IndexName : 'attachIndex',
+      KeyConditionExpression: '#a = :a',
+      FilterExpression: '#n = :n',
+      ExpressionAttributeNames:{
+        '#a': 'attachId',
+        '#n': 'name'
+      },
+      ExpressionAttributeValues: {
+        ':a': attachId,
+        ':n': name
+      }
+    }
+    return docClient.query(params).promise()
   },
   // 获取某一个archive信息
   getByArchiveId: (archiveId) => {

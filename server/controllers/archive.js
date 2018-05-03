@@ -6,12 +6,36 @@ import * as utils from '../utils'
 import Code from '../config/code'
 
 /**
- * 获取所有归档类
+ * 获取某作者下所有归档类
  * @param {*} ctx 
  * @param {*} next 
  */
-const fetchArchives = async (ctx, next) => {
-
+const fetchArchivesByAttachId = async (ctx, next) => {
+  const { attachId } = ctx.params
+  try {
+    const archives = await ArchiveModel.queryAllByAttachId(attachId)
+    let Items
+    if (archives.Count === 0) {
+      Items = []
+    } else {
+      Items = archives.Items
+    }
+    const result = {
+      action: 'QUERY',
+      message: Code.ARCHIVE_GETBYATTACH_SUCCESS,
+      code: Code.ARCHIVE_GETBYATTACH_SUCCESS_CODE,
+      success: true,
+      items: Items
+    }
+    ctx.body = result
+  } catch(e) {
+    const error = {
+      message: e.message,
+      code: Code.ARCHIVE_GETBYATTACH_ERROR_CODE,
+      success: false
+    }
+    ctx.body = error
+  }
 }
 
 /**
@@ -54,28 +78,35 @@ const fetchArchiveById = async (ctx, next) => {
 const createArchive = async (ctx, next) => {
   // 获取body中的数据
   const {
-    name
+    name,
+    attachId
   } = ctx.request.body
-  // 生成archive唯一ID
-  const archiveId = utils.generateUniqueID()
-  // 生成时间戳
-  const currentDate = utils.getCurrentDate(new Date())
-  const createdAt = currentDate
-  const updatedAt = currentDate
-  // 写入数据库
-  const newArchive = {
-    archiveId, name, createdAt, updatedAt
-  }
   try {
-    await ArchiveModel.create(newArchive)
-    const result = {
-      action: 'CREATE',
-      message: Code.ARCHIVE_CREATE_SUCCESS,
-      code: Code.ARCHIVE_CREATE_SUCCESS_CODE,
-      success: true,
-      item: newArchive
+    // 检查命名是否唯一
+    const queriedArchive = await ArchiveModel.queryByArchiveName(name, attachId)
+    if (queriedArchive.Count === 0) {
+      // 生成archive唯一ID
+      const archiveId = utils.generateUniqueID()
+      // 生成时间戳
+      const currentDate = utils.getCurrentDate(new Date())
+      const createdAt = currentDate
+      const updatedAt = currentDate
+      // 写入数据库
+      const newArchive = {
+        archiveId, name, attachId, createdAt, updatedAt
+      }
+      await ArchiveModel.create(newArchive)
+      const result = {
+        action: 'CREATE',
+        message: Code.ARCHIVE_CREATE_SUCCESS,
+        code: Code.ARCHIVE_CREATE_SUCCESS_CODE,
+        success: true,
+        item: newArchive
+      }
+      ctx.body = result
+    } else {
+      throw new Error('archive name has been used')
     }
-    ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
@@ -154,7 +185,7 @@ const deleteArchiveById = async (ctx, next) => {
 }
 
 export {
-  fetchArchives, // 获取所有归档类
+  fetchArchivesByAttachId, // 获取某作者下的所有归档类
   fetchArchiveById, // 获取某一个归档
   createArchive, // 创建一个归档信息
   updateArchiveById, // 更新一个归档信息

@@ -15,7 +15,7 @@ import {
   fetchAuthorById, // 获取某一个作者
   updateAuthorById, // 更新一个作者
   // Archive
-  fetchArchives, // 获取所有归档类
+  fetchArchivesByAttachId, // 获取某一个作者下的所有归档类
   fetchArchiveById, // 获取某一个归档
   createArchive, // 创建一个归档信息
   updateArchiveById, // 更新一个归档信息
@@ -39,11 +39,10 @@ RestRouter
   .get('/author/:authorId', fetchAuthorById) // 获取某一个作者profile
   .put('/author/update/:authorId', updateAuthorById) // 更新一个作者profile
   // Archive
-  .get('/archive', fetchArchives) // 获取所有归档类
+  .get('/archive/attach/:attachId', fetchArchivesByAttachId) // 获取某一个作者下的所有归档类
   .get('/archive/:archiveId', fetchArchiveById) // 获取某一个归档
   .post('/archive/create', createArchive) // 创建一个归档信息
   .put('/archive/update/:archiveId', updateArchiveById) // 更新一个归档信息
   .del('/archive/delete/:archiveId', deleteArchiveById) // 删除一个归档信息
-
 
 export default RestRouter
