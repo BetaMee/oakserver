@@ -53,6 +53,7 @@ const mutationResolverMap = {
         const updatedArticle = await ArticleModel.updateByArticleId(articleId, toUpdateArticle)
         return updatedArticle.Attributes
       } catch(e) {
+        console.log(e)
         return null
       }
     },

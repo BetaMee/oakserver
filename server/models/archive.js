@@ -1,4 +1,5 @@
 import { docClient } from '../config/aws'
+import * as utils from '../utils'
 
 import {
   ARCHIVE_TABLE
@@ -60,9 +61,10 @@ const ArchiveModel = {
   // 根据archiveid更新信息
   updateByArchiveId: (archiveId, toUpdateArchive) => {
     const {
-      name,
-      updatedAt
-    } = toUpdateArchive
+      updateExpression,
+      expressionAttributeNames,
+      expressionAttributeValues
+    } = utils.generateModelUpdateParam(toUpdateArchive)
     // 更新参数
     const params = {
       TableName: ARCHIVE_TABLE,
@@ -70,16 +72,14 @@ const ArchiveModel = {
         'archiveId' : archiveId
       },
       ConditionExpression: '#id = :id',
-      UpdateExpression: 'set #n = :n, #u = :u',
+      UpdateExpression: updateExpression,
       ExpressionAttributeNames: {
         '#id': 'archiveId',
-        '#n': 'name',
-        '#u': 'updatedAt'
+        ...expressionAttributeNames
       },
       ExpressionAttributeValues:{
         ':id': archiveId,
-        ':n': name,
-        ':u': updatedAt
+        ...expressionAttributeValues
       },
       ReturnValues: 'ALL_NEW'
     }

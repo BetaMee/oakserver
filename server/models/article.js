@@ -1,5 +1,6 @@
 // 引入docClient操作数据库
 import { docClient } from '../config/aws'
+import * as utils from '../utils'
 
 import {
   ARTICLE_TABLE
@@ -66,11 +67,10 @@ const ArticleModel = {
   // 更新文章
   updateByArticleId: (articleId, toUpdateArticle) => {
     const {
-      title,
-      content,
-      archive,
-      updatedAt
-    } = toUpdateArticle
+      updateExpression,
+      expressionAttributeNames,
+      expressionAttributeValues
+    } = utils.generateModelUpdateParam(toUpdateArticle)
     // 更新参数
     const params = {
       TableName: ARTICLE_TABLE,
@@ -78,20 +78,14 @@ const ArticleModel = {
         'articleId' : articleId
       },
       ConditionExpression: '#id = :id',
-      UpdateExpression: 'set #t = :t, #c = :c, #a = :a, #u = :u',
+      UpdateExpression: updateExpression,
       ExpressionAttributeNames: {
         '#id': 'articleId',
-        '#t': 'title',
-        '#c': 'content',
-        '#a': 'archive',
-        '#u': 'updatedAt'
+        ...expressionAttributeNames
       },
       ExpressionAttributeValues:{
         ':id': articleId,
-        ':t': title,
-        ':c': content,
-        ':a': archive,
-        ':u': updatedAt
+        ...expressionAttributeValues
       },
       ReturnValues: 'ALL_NEW'
     }

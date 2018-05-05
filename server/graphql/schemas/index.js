@@ -35,19 +35,19 @@ const RootMutation = `
     # 创建一个新的文章
     createArticle(article: ArticleInput!): Article
     # 更新一个文章
-    updateArticle(articleId: String!, toUpdateParam: ArticleInput!): Article
+    updateArticle(articleId: String!, toUpdateParam: UpdateArticleInput!): Article
     # 删除一个文章
     deleteArticle(articleId: String!): String
 
     # 创建一个新归档
     createArchive(archive: ArchiveInput!): Archive
     # 更新一个归档
-    updateArchive(archiveId: String!, toUpdateParam: ArchiveInput!): Archive
+    updateArchive(archiveId: String!, toUpdateParam: UpdateArchiveInput!): Archive
     # 删除一个归档
     deleteArchive(archiveId: String!): String
    
     # 更新一个作者
-    updateAuthor(authorId: String!, toUpdateParam: AuthorInput!): Author
+    updateAuthor(authorId: String!, toUpdateParam: UpdateAuthorInput!): Author
   }
 `
 // 最终的顶层查询描述接口
