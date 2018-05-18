@@ -8,7 +8,8 @@ import {
   fetchArticlesByArchiveId, // 某归档类下有多少文章
   fetchArticlesByAuthorId, // 某作者下有多少文章
   createArticle, // 生成一篇新文章
-  updateArticleById, // 更新一篇文章
+  updateArticleTitleById, // 更新一篇文章标题
+  updateArticleContentById, // 更新文章内容
   deleteArticleById, // 删除一篇文章
   // Author
   fetchAuthors, // 获取所有作者
@@ -32,7 +33,8 @@ RestRouter
   .get('/article/archive/:archiveId', fetchArticlesByArchiveId) // 某归档类下有多少文章
   .get('/article/author/:authorId', fetchArticlesByAuthorId) // 某作者下有多少文章
   .post('/article/create', createArticle) // 生成一篇新文章
-  .put('/article/update/:articleId', updateArticleById) // 更新一篇文章
+  .put('/article/update/title/:articleId', updateArticleTitleById) // 更新一篇文章标题
+  .put('/article/update/content/:articleId', updateArticleContentById) // 更新一篇文章内容
   .del('/article/delete/:articleId', deleteArticleById) // 删除一篇文章
   // Author
   .get('/author', fetchAuthors) // 获取所有作者

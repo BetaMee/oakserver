@@ -189,7 +189,7 @@ const createArticle = async (ctx, next)  => {
  * @param {*} ctx 
  * @param {*} next 
  */
-const updateArticleById = async (ctx, next) => {
+const updateArticleTitleById = async (ctx, next) => {
   // 获取文章ID
   const articleId = ctx.params.articleId
   // 更新updateAt
@@ -197,30 +197,71 @@ const updateArticleById = async (ctx, next) => {
   // 获取可以更新的字段
   const {
     title,
-    content,
-    archive
   } = ctx.request.body
   // 更新的对象
   const toUpdateArticle = {
     title,
-    content,
-    archive,
     updatedAt
   }
   try {
     const updatedArticle = await ArticleModel.updateByArticleId(articleId, toUpdateArticle)
+    const updateItem = updatedArticle.Attributes
     const result = {
       action: 'UPDATE',
-      message: Code.ARTICLE_UPDATE_SUCCESS,
-      code: Code.ARTICLE_UPDATE_SUCCESS_CODE,
+      message: Code.ARTICLE_UPDATE_TITLE_SUCCESS,
+      code: Code.ARTICLE_UPDATE_TITLE_SUCCESS_CODE,
       success: true,
-      item: updatedArticle.Attributes
+      item: {
+        updatedAt: updateItem.updatedAt
+      }
     }
     ctx.body = result
   } catch(e) {
     const error = {
       message: e.message,
-      code: Code.ARTICLE_UPDATE_ERROR_CODE,
+      code: Code.ARTICLE_UPDATE_TITLE_ERROR_CODE,
+      success: false
+    }
+    ctx.body = error
+  }
+}
+
+/**
+ * 更新文章内容
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+const updateArticleContentById = async (ctx, next) => {
+  // 获取文章ID
+  const articleId = ctx.params.articleId
+  // 更新updateAt
+  const updatedAt = utils.getCurrentDate(new Date())
+  // 获取可以更新的字段
+  const {
+    content
+  } = ctx.request.body
+  // 更新的对象
+  const toUpdateArticle = {
+    content,
+    updatedAt
+  }
+  try {
+    const updatedArticle = await ArticleModel.updateByArticleId(articleId, toUpdateArticle)
+    const updateItem = updatedArticle.Attributes
+    const result = {
+      action: 'UPDATE',
+      message: Code.ARTICLE_UPDATE_CONTENT_SUCCESS,
+      code: Code.ARTICLE_UPDATE_CONTENT_SUCCESS_CODE,
+      success: true,
+      item: {
+        updatedAt: updateItem.updatedAt
+      }
+    }
+    ctx.body = result
+  } catch(e) {
+    const error = {
+      message: e.message,
+      code: Code.ARTICLE_UPDATE_CONTENT_ERROR_CODE,
       success: false
     }
     ctx.body = error
@@ -260,6 +301,7 @@ export {
   fetchArticlesByArchiveId, // 某归档类下有多少文章
   fetchArticlesByAuthorId, // 某作者下有多少文章
   createArticle, // 生成一篇新文章
-  updateArticleById, // 更新一篇文章
+  updateArticleTitleById, // 更新一篇文章
+  updateArticleContentById, // 更新文章内容
   deleteArticleById, // 删除一篇文章
 }
