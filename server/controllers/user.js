@@ -5,6 +5,20 @@ import {
 import * as utils from '../utils'
 import Code from '../config/code'
 
+
+/**
+ * 检查登录态
+ * @param {*} ctx 
+ * @param {*} next 
+ */
+const checkLogin = async (ctx, next) => {
+  ctx.body = {
+    message: Code.USER_CHECK_SUCCESS,
+    success: true,
+    code: Code.USER_CHECK_SUCCESS_CODE,
+  }
+}
+
 /**
  * 注册用户
  * @param {*} ctx 
@@ -60,7 +74,6 @@ const userRegister = async (ctx, next) => {
         success: true,
         code: Code.USER_REGISTER_SUCCESS_CODE,
       }
-
     } else if (existUser && existUser.username === username) {
       // 已注册
       ctx.body = {
@@ -184,6 +197,7 @@ const userLogout = async (ctx, next) => {
 
 
 export {
+  checkLogin,
   userRegister,
   userLogin,
   userLogout

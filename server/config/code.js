@@ -30,7 +30,9 @@ const Code= {
 
   USER_REGISTERED_ERROR_CODE: '10034',
 
-
+  // 用户状态检查
+  USER_CHECK_SUCCESS: 'user check successfuly',
+  USER_CHECK_SUCCESS_CODE: '10041',
   // Archive
   // GET By ID
   ARCHIVE_GET_SUCCESS: 'get archive successfully',

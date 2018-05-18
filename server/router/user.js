@@ -1,6 +1,7 @@
 import Router from 'koa-router'
 
 import {
+  checkLogin,
   userRegister,
   userLogin,
   userLogout
@@ -9,6 +10,8 @@ import {
 const UserRoute = Router()
 
 UserRoute
+  // 检查
+  .get('/check', checkLogin)
   // 登录
   .post('/login', userLogin)
   // 注销

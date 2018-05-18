@@ -12,6 +12,7 @@ export default ({unlessPath = [], unlessMethod = []}) => {
       const result = await UserModel.getByUserId(decodedToken.userId)
       const user = result.Item
       const isNeedRevoke = user && user.status && user.status.isExpired
+      console.log(isNeedRevoke)
       // 返回true说明是被废弃
       if (isNeedRevoke) {
         throw(new Error('auth is not allowed, please login again'))

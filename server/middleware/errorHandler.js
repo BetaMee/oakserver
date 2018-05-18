@@ -13,7 +13,8 @@ export default (customError) => {
         message: customError.message || err.message,
         status: status,
         orginmessage: err.message,
-        orgincode: err.statusCode || err.status
+        orgincode: err.statusCode || err.status,
+        success: false
       }
       ctx.response.status = status
       ctx.response.body = result
