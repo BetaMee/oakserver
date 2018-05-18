@@ -31,7 +31,12 @@ const ArticleModel = {
       TableName : ARTICLE_TABLE,
       IndexName : 'archiveIndex',
       KeyConditionExpression: '#a = :a',
-      ExpressionAttributeNames:{
+      ProjectionExpression: '#t, #id, #c, #u',
+      ExpressionAttributeNames: {
+        '#t': 'title',
+        '#id' :'articleId',
+        '#c' :'createdAt',
+        '#u' :'updatedAt',
         '#a': 'archive'
       },
       ExpressionAttributeValues: {
